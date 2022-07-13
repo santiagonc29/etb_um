@@ -8,12 +8,14 @@
 
 form {
 	padding: 50px 20px;
-	background-color: #14C1EA;
+	background: rgb(0,255,255);
+	background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%);
 	margin-left: 30%;
 	margin-right: 30%;
 	margin-top: 70px;
 	padding-top: 28px;
 	margin-bottom: 30px;
+	border-radius: 20px;
 }
 
 h1 {
@@ -28,6 +30,7 @@ input {
 	margin: auto;
 	margin-top: 12px;
 	font-size: 16px;
+	border-radius: 20px;
 }
 
 
@@ -117,12 +120,12 @@ header a{
 
 .btnsb{
 
-	width: 50px;
+	width: 100px;
 	height: 46px;
 	border: none;
 	color: #ffff;
 	background-color:  #FF6523;
-	border-radius: 100px;
+	border-radius: 20px;
 }
 
 .logoLogin{
@@ -186,7 +189,6 @@ header a{
 	.btnsb{
 		width: 50px;
 		height: 20px;
-		border-radius: 30%;
 		background-color:  #FF6523 !important;
 	}
 
@@ -235,7 +237,6 @@ header a{
 	.btnsb{
 		width: 50px;
 		height: 20px;
-		border-radius: 100px;
 		background-color:  #FF6523 !important;
 	}
 }
