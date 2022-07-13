@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="shortcut icon" href="assets/logos/LOGO_ETB.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <title>supervisores</title>
+    <title>Contratos</title>
 </head>
 <body>
 <!-- Image and text -->
@@ -61,8 +61,7 @@ background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%
              print "<br>";
              print "<h4>corte a: ".$arc."</h4>";
         ?>
-        <div></div>
-        <a href="index.html"><button class="btn btn-warning btn-lg" style="color: #FFFF; background-color:  #FF6523; border: none;">Reportes Predefinidos</button></a>
+        <div></div><a href="index.html"><button class="btn btn-warning btn-lg" style="color: #FFFF; background-color:  #FF6523; border: none;">Reportes Predefinidos</button></a>
         <a href="index.html"><button class="btn btn-danger btn-lg" >Salir</button></a>
         <div></div>
 </nav>
@@ -106,6 +105,7 @@ ORDER BY C.IDCONTRATO ASC';
         <table class="table table-striped" border="1">
         <thead class="thead-dark">
         <tr>
+            <td><strong>ID</strong></td>
             <td><strong>CONTRATO</strong></td>
             <td><strong>PROVEEDOR</strong></td>
             <td><strong>MONEDA CONTRATO</strong></td>
@@ -119,8 +119,12 @@ ORDER BY C.IDCONTRATO ASC';
     <?php
         while ($fila = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
             print "<tr>\n";
+
+            
             ?>
+            
                 <tr>
+                    <td><?php echo $i ?></td>
                     <td><?php $contrato = oci_result($stid, 'CONTRATO'); echo $contrato ?></td>
                     <td><?php echo oci_result($stid, 'PROVEEDOR') ?></td>
                     <td><?php echo oci_result($stid, 'MONEDA CONTRATO') ?></td>

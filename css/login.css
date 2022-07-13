@@ -117,7 +117,7 @@ header a{
 
 .btnsb{
 
-	width: 100px;
+	width: 50px;
 	height: 46px;
 	border: none;
 	color: #ffff;
@@ -184,9 +184,7 @@ header a{
 	}
 
 	.btnsb{
-		font-family: 'Caecilia';
-		font-weight: bold;
-		width: 100px;
+		width: 50px;
 		height: 20px;
 		border-radius: 30%;
 		background-color:  #FF6523 !important;
@@ -235,11 +233,9 @@ header a{
 	}
 
 	.btnsb{
-		font-family: 'Caecilia';
-		font-weight: bold;
 		width: 50px;
 		height: 20px;
-		border-radius: 30%;
+		border-radius: 100px;
 		background-color:  #FF6523 !important;
 	}
 }

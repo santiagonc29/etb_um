@@ -10,7 +10,8 @@
 </head>
 <body>
 <!-- Image and text -->
-<nav class="navbar navbar-light nav-justified" style="background-color: #14C1EA; color: white;">
+<nav class="navbar navbar-light nav-justified" style="background: rgb(0,255,255);
+background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%); color: white;">
     <div></div>
         <a class="navbar-brand" href="#">
             <img src="assets/logos/Logo-blanco-tagline.png" width="100" height="auto" class="d-inline-block align-top" alt="">
@@ -52,6 +53,7 @@ WHERE C.NUMERO_DE_CONTRATO ='.$idEnlace;
         print "<tr>\n";
             print "<td><strong>ID ENLACE</strong></td>";
             print "<td><strong>CLIENTE</strong></td>";
+            print "<td><strong>ID PROVEEDOR</strong></td>";
             print "<td><strong>PROYECTO</strong></td>";
             print "<td><strong>TIPO SERVICIO</strong></td>";
             print "<td><strong>INICIO SERVICIO</strong></td>";
@@ -60,7 +62,6 @@ WHERE C.NUMERO_DE_CONTRATO ='.$idEnlace;
             print "<td><strong>NUMERO CONTRATO</strong></td>";
             print "<td><strong>MENSUALIDAD COP</strong></td>";
             print "<td><strong>MENSUALIDAD USD</strong></td>";
-            print "<td><strong>ID PROVEEDOR</strong></td>";
         print "</tr>\n";
         print " </thead>\n";
         while ($fila = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
@@ -69,6 +70,7 @@ WHERE C.NUMERO_DE_CONTRATO ='.$idEnlace;
                 <tr>
                     <td><?php echo oci_result($stid, 'ID ETB'); ?></td>
                     <td><?php echo oci_result($stid, 'CLIENTE'); ?></td>
+                    <td><?php echo oci_result($stid, 'ID PROVEEDOR'); ?></td>
                     <td><?php echo oci_result($stid, 'PROYECTO'); ?></td>
                     <td><?php echo oci_result($stid, 'SERVICIO'); ?></td>
                     <td><?php echo oci_result($stid, 'IN SERVICIO'); ?></td>
@@ -77,7 +79,6 @@ WHERE C.NUMERO_DE_CONTRATO ='.$idEnlace;
                     <td><?php echo oci_result($stid, 'N CONTRATO'); ?></td>
                     <td><?php echo oci_result($stid, 'MENSUALIDAD COP'); ?></td>
                     <td><?php echo oci_result($stid, 'MENSUALIDAD USD'); ?></td>
-                    <td><?php echo oci_result($stid, 'ID PROVEEDOR'); ?></td>
                 </tr>
             <?php
            
