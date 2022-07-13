@@ -81,3 +81,8 @@ oci_close($conexión);
 Colores etb
 Azul = #0093bf
 naranja = #ff5c34
+
+ciclo for each sup linea 120
+foreach ($fila as $elemento) {
+                print "    <td>" . ($elemento !== null ? htmlentities($elemento, ENT_QUOTES) : "") . "</td>\n";
+            }

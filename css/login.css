@@ -1,3 +1,4 @@
+
 * {
 	padding: 0;
 	margin: 0;
@@ -7,18 +8,18 @@
 
 form {
 	padding: 50px 20px;
-	background-color: #0093bf;
+	background-color: #14C1EA;
 	margin-left: 30%;
 	margin-right: 30%;
 	margin-top: 70px;
 	padding-top: 28px;
-	margin-bottom: 30px
+	margin-bottom: 30px;
 }
 
 h1 {
 	text-align: center;
 	padding: 12px;
-	color: rgb(206, 203, 203)
+	color: rgb(206, 203, 203);
 }
 
 input {
@@ -26,7 +27,7 @@ input {
 	padding: 9px;
 	margin: auto;
 	margin-top: 12px;
-	font-size: 16px
+	font-size: 16px;
 }
 
 
@@ -36,14 +37,14 @@ input {
 	width: 100%;
 	padding: 12px;
 	background-color: #1e6;
-	color: #fff
+	color: #fff;
 }
 .bad {
 	text-align: center;
 	width: 100%;
 	padding: 12px;
 	background-color: #a22;
-	color: #fff
+	color: #fff;
 }
 .blanco{
  color: white;
@@ -74,7 +75,7 @@ h6 {
 }
 .gabo{
 	padding: 50px 20px;
-	background-color: #0093bf;
+	background-color: #14C1EA;
 	margin: calc(25% + 100px);
 	margin-top: 70px;
 	padding-top: 28px;
@@ -88,7 +89,7 @@ header{
     flex-wrap: wrap;
     align-items: center;
     align-content: space-between;
-    background-color: #0093bf;
+    background-color: #14C1EA;
 }
 header h1{
     margin-left: 5px;
@@ -113,22 +114,38 @@ header a{
 	top: -50px;
 	left: calc(50% - 50px);
 }
+
+.btnsb{
+
+	width: 100px;
+	height: 46px;
+	border: none;
+	color: #ffff;
+	background-color:  #FF6523;
+	border-radius: 100px;
+}
+
+.logoLogin{
+	width: 250px;
+	height: 250px;
+}
+
 @media only screen and (min-width:360px) and (max-width:757px){
 	form {
 		padding: 50px 20px;
-		background-color: #0093bf;
+		background-color: #14C1EA;
 		margin-left: 5%;
 		margin-right: 5%;
 		margin-top: 70px;
 		padding-top: 28px;
-		margin-bottom: 30px
+		margin-bottom: 30px;
 	}
 	input {
 		width: calc(100% - 20px);
 		padding: 9px;
 		margin: auto;
 		margin-top: 12px;
-		font-size: 16px
+		font-size: 16px;
 	}
 	body{
 		max-width: 100%;
@@ -143,20 +160,59 @@ header a{
 @media only screen and (min-width:280px) and (max-width:757px){
 	form {
 		padding: 50px 20px;
-		background-color: #0093bf;
+		background-color: #14C1EA;
 		margin-left: 5%;
 		margin-right: 5%;
 		margin-top: 70px;
 		padding-top: 28px;
-		margin-bottom: 30px
+		margin-bottom: 30px;
 	}
 	input {
 		width: calc(100% - 20px);
 		padding: 9px;
 		margin: auto;
 		margin-top: 12px;
-		font-size: 16px
+		font-size: 16px;
 	}
+	body{
+		max-width: 100%;
+		max-height: 500%;
+		background-attachment: fixed; 
+		background-repeat: no-repeat;
+		color:white;
+		
+	}
+
+	.btnsb{
+		font-family: 'Caecilia';
+		font-weight: bold;
+		width: 100px;
+		height: 20px;
+		border-radius: 30%;
+		background-color:  #FF6523 !important;
+	}
+
+	
+
+}
+@media only screen and (min-width:760px) and (max-width:1180px){
+	form {
+		padding: 50px 20px;
+		background-color: #14C1EA;
+		margin-left: 5%;
+		margin-right: 5%;
+		margin-top: 70px;
+		padding-top: 28px;
+		margin-bottom: 30px;
+	}
+	input {
+		width: calc(100% - 20px);
+		padding: 20px;
+		margin: auto;
+		margin-top: 12px;
+		font-size: 16px;
+	}
+	
 	body{
 		max-width: 100%;
 		max-height: 200%;
@@ -166,40 +222,24 @@ header a{
 		
 	}
 
-}
-@media only screen and (min-width:760px) and (max-width:1180px){
-	form {
-		padding: 50px 20px;
-		background-color: #0093bf;
-		margin-left: 5%;
-		margin-right: 5%;
-		margin-top: 70px;
-		padding-top: 28px;
-		margin-bottom: 30px
-	}
-	input {
-		width: calc(100% - 20px);
-		padding: 20px;
-		margin: auto;
-		margin-top: 12px;
-		font-size: 16px
-	}
-	body{
-		max-width: 100%;
-		max-height: 200%;
-		background-attachment: fixed; 
-		background-repeat: no-repeat;
-		color:white;
-		
-	}
-	.caja{
+	.card{
 		margin-top: 30%;
 	}
+
 	header h1{
 		margin-left: 10px;
 		align-items: center;
 		width: calc(20% - 100px);
 		font-family: montez;
 		font-size: 80px;
+	}
+
+	.btnsb{
+		font-family: 'Caecilia';
+		font-weight: bold;
+		width: 50px;
+		height: 20px;
+		border-radius: 30%;
+		background-color:  #FF6523 !important;
 	}
 }
