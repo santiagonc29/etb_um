@@ -86,3 +86,9 @@ ciclo for each sup linea 120
 foreach ($fila as $elemento) {
                 print "    <td>" . ($elemento !== null ? htmlentities($elemento, ENT_QUOTES) : "") . "</td>\n";
             }
+
+setlocale(LC_MONETARY, 'en_US');
+echo money_format('%i', $number) . "\n";
+
+
+<input type="button" value="Nueva ventana" onclick="javascript:window.open('http://norfipc.com/','','width=600,height=400,left=50,top=50,toolbar=yes');" />
