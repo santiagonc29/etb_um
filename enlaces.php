@@ -16,9 +16,13 @@ background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%
         <a class="navbar-brand" href="#">
             <img src="assets/logos/Logo-blanco-tagline.png" width="100" height="auto" class="d-inline-block align-top" alt="">
         </a>
-        <H2>Contrato N°: <?php $idcont = $_GET['contrato']; echo $idcont?> </H2>
+        <div>
+            <h4>Proveedor: <?php $proveedor = $_GET['proveedor']; echo $proveedor ?></h4>
+            <h4>Contrato N°: <?php $idcont = $_GET['contrato']; echo $idcont?></h4>
+        </div>
+        
         <div></div>
-        <a href="sup.php"><button class="btn btn-danger btn-lg">volver</button></a>
+          <button type='button' class='btn btn-danger' onclick="window.close()">Cerrar</button>
         <div></div>
 </nav>
 
@@ -51,15 +55,14 @@ WHERE C.NUMERO_DE_CONTRATO ='.$idEnlace;
         print "<table class='table table-striped' border='1'>\n";
         print " <thead class='thead-light'>\n";
         print "<tr>\n";
+            print "<td><strong>ESTADO</strong></td>";
+            print "<td><strong>FECHA LIMITE</strong></td>";
             print "<td><strong>ID ENLACE</strong></td>";
             print "<td><strong>CLIENTE</strong></td>";
-            print "<td><strong>ID PROVEEDOR</strong></td>";
             print "<td><strong>PROYECTO</strong></td>";
             print "<td><strong>TIPO SERVICIO</strong></td>";
             print "<td><strong>INICIO SERVICIO</strong></td>";
             print "<td><strong>FIN SERVICIO</strong></td>";
-            print "<td><strong>ESTADO</strong></td>";
-            print "<td><strong>NUMERO CONTRATO</strong></td>";
             print "<td><strong>MENSUALIDAD COP</strong></td>";
             print "<td><strong>MENSUALIDAD USD</strong></td>";
         print "</tr>\n";
@@ -68,15 +71,20 @@ WHERE C.NUMERO_DE_CONTRATO ='.$idEnlace;
             print "<tr>\n";
             ?>
                 <tr>
+                    <td><?php echo oci_result($stid, 'ESTADO'); ?></td>
+                    <td>
+                      <svg viewbox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M 0, 28 C 0, 12.040000000000001 12.040000000000001, 0 28, 0 S 56, 12.040000000000001 56, 28 43.96, 56 28, 56 0, 43.96 0, 28
+                         " fill="#6CD410" transform="rotate(0,100,100) translate(72 72)">
+                        </path>
+                      </svg>
+                    </td>
                     <td><?php echo oci_result($stid, 'ID ETB'); ?></td>
                     <td><?php echo oci_result($stid, 'CLIENTE'); ?></td>
-                    <td><?php echo oci_result($stid, 'ID PROVEEDOR'); ?></td>
                     <td><?php echo oci_result($stid, 'PROYECTO'); ?></td>
                     <td><?php echo oci_result($stid, 'SERVICIO'); ?></td>
                     <td><?php echo oci_result($stid, 'IN SERVICIO'); ?></td>
                     <td><?php echo oci_result($stid, 'FN SERVICIO'); ?></td>
-                    <td><?php echo oci_result($stid, 'ESTADO'); ?></td>
-                    <td><?php echo oci_result($stid, 'N CONTRATO'); ?></td>
                     <td><?php echo oci_result($stid, 'MENSUALIDAD COP'); ?></td>
                     <td><?php echo oci_result($stid, 'MENSUALIDAD USD'); ?></td>
                 </tr>

@@ -16,11 +16,12 @@ background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%
         <a class="navbar-brand" href="#">
             <img src="assets/logos/Logo-blanco-tagline.png" width="100" height="auto" class="d-inline-block align-top" alt="">
         </a>
+        <div>
         <?php
         include('db.php');
         $Usuario = $_GET['usuario'];
             $cons="SELECT S.SUPERVISOR from TBL_UM_SUPERVISORES S
-            WHERE idsupervisor = '$Usuario'";
+            WHERE S.idsupervisor = '$Usuario'";
 
                     $stid = oci_parse($conexión, $cons);
                     if (!$stid) {
@@ -55,20 +56,23 @@ background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%
              $fila = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS);
              
               //convertimos los datos de array a string
-              $arc = implode(" ", $fila);             
-                
-             print "<h3 class='tltSup'> Supervisor: ".$sup."</h3>";
-             print "<br>";
-             print "<h4>corte a: ".$arc."</h4>";
+              $arc = implode(" ", $fila); 
+              
+              $fecha = date("Y-m-d", strtotime($arc));
+               
+              
+                print "<h4 class='tltSup'>Supervisor: ".$sup."</h4>";
+                print "<h4> corte a: ".$fecha."</h4>";
+             
         ?>
-        <div></div><a href="index.html"><button class="btn btn-warning btn-lg" style="color: #FFFF; background-color:  #FF6523; border: none;">Reportes Predefinidos</button></a>
+        </div>
         <a href="index.html"><button class="btn btn-danger btn-lg" >Salir</button></a>
         <div></div>
 </nav>
 
 <div class="container">
     <br>
-    <h1>Supervisores</h1>
+    <h1>Contratos</h1>
     <br>
 <?php
 include('db.php');
@@ -102,10 +106,12 @@ ORDER BY C.IDCONTRATO ASC';
             trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
         }// Obtener los resultados de la consulta
 ?>
-        <table class="table table-striped" border="1">
+    <div class="cont" >
+      
+    
+       <table class="table table-striped" border="1"> 
         <thead class="thead-dark">
         <tr>
-            <td><strong>ID</strong></td>
             <td><strong>CONTRATO</strong></td>
             <td><strong>PROVEEDOR</strong></td>
             <td><strong>MONEDA CONTRATO</strong></td>
@@ -114,25 +120,30 @@ ORDER BY C.IDCONTRATO ASC';
             <td><strong>IVA FACTURADO</strong></td>
             <td><strong>SALDO CONTRATO</strong></td>
             <td><strong>ENLACES</strong></td>
+            <td><strong>ACCIÓN</strong></td>
         </tr>
          </thead>
     <?php
         while ($fila = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
             print "<tr>\n";
-
-            
             ?>
             
                 <tr>
-                    <td><?php echo $i ?></td>
                     <td><?php $contrato = oci_result($stid, 'CONTRATO'); echo $contrato ?></td>
-                    <td><?php echo oci_result($stid, 'PROVEEDOR') ?></td>
+                    <td><?php $proveedor = oci_result($stid, 'PROVEEDOR'); echo $proveedor ?></td>
                     <td><?php echo oci_result($stid, 'MONEDA CONTRATO') ?></td>
                     <td><?php echo oci_result($stid, 'VALOR CONTRATO') ?></td>
                     <td><?php echo oci_result($stid, 'FACTURADO') ?></td>
                     <td><?php echo oci_result($stid, 'IVA FACTURADO') ?></td>
                     <td><?php echo oci_result($stid, 'SALDO CONTRATO') ?></td>
-                    <td><a href="enlaces.php?contrato=<?php echo $contrato ?>" ><button type='button' class='btn btn-primary'>Enlace</button></a></td>
+                    <td><a target="_blank" href="enlaces.php?contrato=<?php echo $contrato ?>&proveedor= <?php echo $proveedor?>" ><button type='button' class='btn btn-primary'>Enlace</button></a></td>
+                    <td>
+                        <label for="fechaI">Del mes:</label>
+                        <input type="month" name="fechaI" id="fechaI">
+                        <label for="fechaF">Al mes:</label>
+                        <input type="month" name="fechaF" id="fechaF">
+                        <button type='button' class='btn btn-info' onclick="window.open('enlaces.php?contrato=<?php echo $contrato ?>&proveedor= <?php echo $proveedor?>','','width=800,height=600,left=50,top=50,toolbar=yes');">Consultar</button>
+                    </td>
                 </tr>
             <?php
            
@@ -145,6 +156,8 @@ oci_free_statement($stid);
 oci_close($conexión);
 
 ?>
+<!-- fin del div cont -->
+  </div>
 </div>
 
  <!-- Site footer -->
