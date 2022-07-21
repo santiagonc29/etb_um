@@ -86,3 +86,6 @@ ciclo for each sup linea 120
 foreach ($fila as $elemento) {
                 print "    <td>" . ($elemento !== null ? htmlentities($elemento, ENT_QUOTES) : "") . "</td>\n";
             }
+
+setlocale(LC_MONETARY, 'en_US');
+echo money_format('%i', $number) . "\n";

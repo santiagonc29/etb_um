@@ -9,6 +9,26 @@
     <title>Contratos</title>
 </head>
 <body>
+  <style>
+    .contM{
+      display: none;
+      /* position: absolute; 
+      left: 250px; 
+      top: 10px; */
+      margin-top:20px;
+      width:20%;
+      background: #F2F4F4;
+      padding: 10px;
+      border-radius: 1rem;
+      box-shadow: 15px 15px 15px -3px rgba(0,0,0,0.1);
+}
+
+.cont{
+  margin-top:20px;
+  margin-left: 20px;
+}
+
+  </style>
 <!-- Image and text -->
 <nav class="navbar navbar-light nav-justified" style="background: rgb(0,255,255);
 background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%); color: white;">
@@ -16,11 +36,12 @@ background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%
         <a class="navbar-brand" href="#">
             <img src="assets/logos/Logo-blanco-tagline.png" width="100" height="auto" class="d-inline-block align-top" alt="">
         </a>
+        <div>
         <?php
         include('db.php');
         $Usuario = $_GET['usuario'];
             $cons="SELECT S.SUPERVISOR from TBL_UM_SUPERVISORES S
-            WHERE idsupervisor = '$Usuario'";
+            WHERE LOGIN = '$Usuario'";
 
                     $stid = oci_parse($conexión, $cons);
                     if (!$stid) {
@@ -38,42 +59,102 @@ background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%
              //convertimos los datos de array a string
              $sup = implode(" ", $fila);
 
-             $cons="SELECT C.ARCHIVO from TBL_UM_CONTRATOS C
-             WHERE idsupervisor = '$Usuario'";
+            //  $cons="SELECT ARCHIVO from TBL_UM_CONTRATOS
+            //  WHERE idsupervisor = '$Usuario'";
              
-                     $stid = oci_parse($conexión, $cons);
-                     if (!$stid) {
-                         $e = oci_error($conexión);
-                         trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
-                     }// Realizar la lógica de la consulta
+            //          $stid = oci_parse($conexión, $cons);
+            //          if (!$stid) {
+            //              $e = oci_error($conexión);
+            //              trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+            //          }// Realizar la lógica de la consulta
                      
-                     $r = oci_execute($stid);
-                     if (!$r) {
-                         $e = oci_error($stid);
-                         trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
-                     }// Obtener los resultados de la consulta
-             $fila = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS);
+            //          $r = oci_execute($stid);
+            //          if (!$r) {
+            //              $e = oci_error($stid);
+            //              trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+            //          }// Obtener los resultados de la consulta
+            //  $fila = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS);
              
-              //convertimos los datos de array a string
-              $arc = implode(" ", $fila);             
-                
-             print "<h3 class='tltSup'> Supervisor: ".$sup."</h3>";
-             print "<br>";
-             print "<h4>corte a: ".$arc."</h4>";
+            //   //convertimos los datos de array a string
+            //   $arc = implode(" ", $fila); 
+              
+            //   $fecha = date("Y-m-d", strtotime($arc));
+               $fecha = "";
+              
+                print "<h4 class='tltSup'>Supervisor: ".$sup."</h4>";
+                print "<h4> corte a: ".$fecha."</h4>";
+             
         ?>
-        <div></div><a href="index.html"><button class="btn btn-warning btn-lg" style="color: #FFFF; background-color:  #FF6523; border: none;">Reportes Predefinidos</button></a>
+        </div>
         <a href="index.html"><button class="btn btn-danger btn-lg" >Salir</button></a>
         <div></div>
 </nav>
-
+<!-- style="position: relative; -->
 <div class="container">
-    <br>
-    <h1>Supervisores</h1>
-    <br>
+<?php 
+    $Usuario = $_GET['usuario'];
+
+    $cons = "SELECT COUNT (*) from TBL_UM_CONTRATOS where IDSUPERVISOR=".$Usuario;
+    
+    $stid = oci_parse($conexión, $cons);
+    if (!$stid) {
+        $e = oci_error($conexión);
+        trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+    }// Realizar la lógica de la consulta
+    
+    $r = oci_execute($stid);
+    if (!$r) {
+        $e = oci_error($stid);
+        trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+    }// Obtener los resultados de la consulta
+    $fila = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS);
+    $conteo = implode(" ", $fila);
+
+    
+    ?>
+  <br>
+  <h1>Total de contratos:  <?php echo $conteo;?></h1> 
+  <button class="btn btn-primary" onclick="mostrar()">Mostrar tipos de contratos</button>
+  <br>
+  <div class="contM" id="contM">
+  <?php 
+$Usuario = $_GET['usuario'];
+
+$cons = "select count(idcontrato),tipo from tbl_um_contratos where IDSUPERVISOR = " .$Usuario. " group by tipo order by tipo";
+
+$stid = oci_parse($conexión, $cons);
+if (!$stid) {
+    $e = oci_error($conexión);
+    trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+}// Realizar la lógica de la consulta
+
+$r = oci_execute($stid);
+if (!$r) {
+    $e = oci_error($stid);
+    trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+}// Obtener los resultados de la consulta
+
+print "<table>\n";
+print "<tr>\n";
+    print "<td><strong>CANT</strong></td>";
+    print "<td><center><strong>TIPO</strong></center></td>";
+    print "</tr>\n";
+while ($fila = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+    print "<tr>\n";
+    foreach ($fila as $elemento) {
+        print "    <td>" . ($elemento !== null ? htmlentities($elemento, ENT_QUOTES) : "") . "</td>\n";
+    }
+    print "</tr>\n";
+}
+
+print "</table>\n";
+
+?>
+  </div>
 <?php
 include('db.php');
 $Usuario = $_GET['usuario'];
-$cons='SELECT C.IDCONTRATO "CONTRATO", P.PROVEEDOR, C.MON_CON "MONEDA CONTRATO", C.VR_CONTRATO "VALOR CONTRATO",
+$cons='SELECT C.IDCONTRATO "CONTRATO", P.PROVEEDOR, C.MON_CON "MONEDA CONTRATO",C.FECHA_FIN "FECHA FIN", C.VR_CONTRATO "VALOR CONTRATO",
 
 C.VR_POSICION "FACTURADO", C.VR_IVA_FACTURADO "IVA FACTURADO",
 
@@ -81,13 +162,13 @@ C.VR_POSICION "FACTURADO", C.VR_IVA_FACTURADO "IVA FACTURADO",
 
 FROM TBL_UM_CONTRATOS C
 
-INNER JOIN TBL_UM_SUPERVISORES S ON C.IDSUPERVISOR=S.IDSUPERVISOR
+INNER JOIN TBL_UM_SUPERVISORES S ON C.IDSUPERVISOR=S.LOGIN
 
 INNER JOIN TBL_UM_PROVEEDORES P ON C.IDPROVEEDOR=P.IDPROVEEDOR
 
 WHERE C.IDSUPERVISOR = ' .$Usuario.'
 
-GROUP BY C.IDCONTRATO, P.PROVEEDOR, S.IDSUPERVISOR, S.SUPERVISOR, C.ARCHIVO, C.MON_CON,C.VR_CONTRATO,C.VR_POSICION,C.VR_IVA_FACTURADO
+GROUP BY C.IDCONTRATO, P.PROVEEDOR, S.LOGIN, S.SUPERVISOR,C.MON_CON,C.FECHA_FIN,C.VR_CONTRATO,C.VR_POSICION,C.VR_IVA_FACTURADO
 
 ORDER BY C.IDCONTRATO ASC';
         $stid = oci_parse($conexión, $cons);
@@ -101,11 +182,13 @@ ORDER BY C.IDCONTRATO ASC';
             $e = oci_error($stid);
             trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
         }// Obtener los resultados de la consulta
+        $fechaAc = date("d-m-y");
 ?>
-        <table class="table table-striped" border="1">
+</div>
+    <div class="cont" >
+       <table class="table table-striped" border="1"> 
         <thead class="thead-dark">
         <tr>
-            <td><strong>ID</strong></td>
             <td><strong>CONTRATO</strong></td>
             <td><strong>PROVEEDOR</strong></td>
             <td><strong>MONEDA CONTRATO</strong></td>
@@ -113,26 +196,58 @@ ORDER BY C.IDCONTRATO ASC';
             <td><strong>FACTURADO</strong></td>
             <td><strong>IVA FACTURADO</strong></td>
             <td><strong>SALDO CONTRATO</strong></td>
+            <td><strong>p.p.p</strong></td>
+            <td><strong>p.p.e</strong></td>
+            <td><strong>Vencimiento</strong></td>
             <td><strong>ENLACES</strong></td>
+            <td><strong>MAS INFORMACIÓN</strong></td>
         </tr>
          </thead>
     <?php
         while ($fila = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
             print "<tr>\n";
-
-            
             ?>
             
                 <tr>
-                    <td><?php echo $i ?></td>
                     <td><?php $contrato = oci_result($stid, 'CONTRATO'); echo $contrato ?></td>
-                    <td><?php echo oci_result($stid, 'PROVEEDOR') ?></td>
+                    <td><?php $proveedor = oci_result($stid, 'PROVEEDOR'); echo $proveedor ?></td>
                     <td><?php echo oci_result($stid, 'MONEDA CONTRATO') ?></td>
                     <td><?php echo oci_result($stid, 'VALOR CONTRATO') ?></td>
                     <td><?php echo oci_result($stid, 'FACTURADO') ?></td>
                     <td><?php echo oci_result($stid, 'IVA FACTURADO') ?></td>
                     <td><?php echo oci_result($stid, 'SALDO CONTRATO') ?></td>
-                    <td><a href="enlaces.php?contrato=<?php echo $contrato ?>" ><button type='button' class='btn btn-primary'>Enlace</button></a></td>
+                    <td><?php echo "Sin datos" ?></td>
+                    <td><?php echo "SIn datos" ?></td>
+                    <td><?php 
+                      $fechaCon = oci_result($stid, 'FECHA FIN');
+                      $dateDifference = abs(strtotime($fechaCon) - strtotime($fechaAc));
+
+                      $days = floor($dateDifference / (60 * 60 * 24));
+                      //echo $dateDifference;
+
+                      if($days <= $fechaAc){
+                        $color = "#000 ";
+                      }else{
+                        if($days > 60){
+                          $color = "#6CD410";
+                        }else if($days > 30){
+                          $color = "#F1C40F";
+                        }else if($days <= 0){
+                          $color = "#E74C3C ";
+                        }
+                      }
+                      
+                      ?>
+                      <svg viewbox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M 0, 28 C 0, 12.040000000000001 12.040000000000001, 0 28, 0 S 56, 12.040000000000001 56, 28 43.96, 56 28, 56 0, 43.96 0, 28
+                         " fill="<?php echo $color ?>" transform="rotate(0,100,100) translate(72 72)">
+                        </path>
+                      </svg>
+                    </td>
+                    <td><a target="_blank" href="enlaces.php?contrato=<?php echo $contrato ?>&proveedor= <?php echo $proveedor?>" ><button type='button' class='btn btn-primary'>Enlace</button></a></td>
+                    
+                    <td><a target="_blank" href="contratos.php?contrato=<?php echo $contrato ?>" ><button type='button' class='btn btn-primary'>Ver mas</button></a></td>
+                    </td>
                 </tr>
             <?php
            
@@ -145,6 +260,8 @@ oci_free_statement($stid);
 oci_close($conexión);
 
 ?>
+<!-- fin del div cont -->
+  </div>
 </div>
 
  <!-- Site footer -->
@@ -209,5 +326,15 @@ oci_close($conexión);
 </footer>
 <script src="scripts/bootstrap.min.js"></script>
 <script src="scripts/bootstrap.bundle.min.js"></script>
+<script>
+  function mostrar() {
+    var x = document.getElementById("contM");
+    if (x.style.display === "block") {
+        x.style.display = "none";
+    } else {
+        x.style.display = "block";
+    }
+}
+</script>
 </body>
 </html>

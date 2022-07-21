@@ -20,8 +20,6 @@ $fila = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS);
 //convertimos los datos de array a string
 $str = implode(" ", $fila);
 
-print $str;
-
 //hacemos validación de cargo por medio de switch
 switch($str){
 
@@ -33,6 +31,7 @@ switch($str){
         header('location: sup.php?usuario='.$_POST['usuario']);
         break;
 }
+
 
 //cerramos la conexion
 oci_free_statement($stid);

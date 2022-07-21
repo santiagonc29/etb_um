@@ -31,6 +31,7 @@ input {
 	margin-top: 12px;
 	font-size: 16px;
 	border-radius: 20px;
+	border: none;
 }
 
 
@@ -60,6 +61,7 @@ body{
 	color:white;
 	
 }
+
 .mensaje{
 	width: 100%;
 	max-width: 350px;
@@ -187,7 +189,7 @@ header a{
 	}
 
 	.btnsb{
-		width: 50px;
+		width: 100px;
 		height: 20px;
 		background-color:  #FF6523 !important;
 	}

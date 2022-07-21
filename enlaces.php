@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="shortcut icon" href="assets/logos/LOGO_ETB.png" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <title>Enlaces</title>
+    <title><?php $proveedor = $_GET['proveedor']; echo $proveedor ?> </title>
 </head>
 <body>
 <!-- Image and text -->
@@ -16,15 +16,44 @@ background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%
         <a class="navbar-brand" href="#">
             <img src="assets/logos/Logo-blanco-tagline.png" width="100" height="auto" class="d-inline-block align-top" alt="">
         </a>
-        <H2>Contrato N°: <?php $idcont = $_GET['contrato']; echo $idcont?> </H2>
+        <div>
+            <h4>Proveedor: <?php $proveedor = $_GET['proveedor']; echo $proveedor ?></h4>
+            <h4>Contrato N°: <?php $idcont = $_GET['contrato']; echo $idcont?></h4>
+        </div>
+        
         <div></div>
-        <a href="sup.php"><button class="btn btn-danger btn-lg">volver</button></a>
+          <button type='button' class='btn btn-danger' onclick="window.close()">Cerrar</button>
         <div></div>
 </nav>
+<?php
+    
+  include('db.php'); 
+    $idcont = $_GET['contrato'];
 
+    $cons = "SELECT COUNT (*) from TBL_UM_ENLACES where NUMERO_DE_CONTRATO=".$idcont;
+    
+    $stid = oci_parse($conexión, $cons);
+    if (!$stid) {
+        $e = oci_error($conexión);
+        trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+    }// Realizar la lógica de la consulta
+    
+    $r = oci_execute($stid);
+    if (!$r) {
+        $e = oci_error($stid);
+        trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+    }// Obtener los resultados de la consulta
+    $fila = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS);
+    $conteo = implode(" ", $fila);
+
+    
+    ?>
 <div class="container">
     <br>
-    <h1>Supervisores</h1>
+    <h1>Total de enlances: <?php echo $conteo;?></h1>
+    <p>
+    
+  </p>
     <br>
     <?php
 include('db.php');
@@ -51,34 +80,65 @@ WHERE C.NUMERO_DE_CONTRATO ='.$idEnlace;
         print "<table class='table table-striped' border='1'>\n";
         print " <thead class='thead-light'>\n";
         print "<tr>\n";
+            print "<td><strong>ESTADO</strong></td>";
+            print "<td><strong>LIMITE</strong></td>";
             print "<td><strong>ID ENLACE</strong></td>";
             print "<td><strong>CLIENTE</strong></td>";
-            print "<td><strong>ID PROVEEDOR</strong></td>";
             print "<td><strong>PROYECTO</strong></td>";
             print "<td><strong>TIPO SERVICIO</strong></td>";
             print "<td><strong>INICIO SERVICIO</strong></td>";
             print "<td><strong>FIN SERVICIO</strong></td>";
-            print "<td><strong>ESTADO</strong></td>";
-            print "<td><strong>NUMERO CONTRATO</strong></td>";
             print "<td><strong>MENSUALIDAD COP</strong></td>";
             print "<td><strong>MENSUALIDAD USD</strong></td>";
+            print "<td><strong>Mas Información</strong></td>";
         print "</tr>\n";
         print " </thead>\n";
+        // verde #6CD410 
+        // amarillo #F1C40F 
+        // rojo #E74C3C 
+
+        $fechaAc = date("d-m-y");
         while ($fila = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
             print "<tr>\n";
             ?>
                 <tr>
-                    <td><?php echo oci_result($stid, 'ID ETB'); ?></td>
+                    <td><?php echo oci_result($stid, 'ESTADO'); ?></td>
+                    <td><?php 
+                     $fechaCon = oci_result($stid, 'FN SERVICIO');
+                     $dateDifference = abs(strtotime($fechaCon) - strtotime($fechaAc));
+
+                      $days = floor($dateDifference / (60 * 60 * 24));
+                      echo $days . "Dias";
+                      //echo $dateDifference;
+
+                      if($days <= $fechaAc){
+                        $color = "#000 ";
+                      }else{
+                        if($days > 60){
+                          $color = "#6CD410";
+                        }else if($fechaRes > 30){
+                          $color = "#F1C40F";
+                        }else if($fechaRes <= 0){
+                          $color = "#E74C3C ";
+                        }
+                      }
+                      
+                      ?>
+                      <svg viewbox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M 0, 28 C 0, 12.040000000000001 12.040000000000001, 0 28, 0 S 56, 12.040000000000001 56, 28 43.96, 56 28, 56 0, 43.96 0, 28
+                         " fill="<?php echo $color ?>" transform="rotate(0,100,100) translate(72 72)">
+                        </path>
+                      </svg>
+                    </td>
+                    <td><?php $idetb = oci_result($stid, 'ID ETB'); echo $idetb ?></td>
                     <td><?php echo oci_result($stid, 'CLIENTE'); ?></td>
-                    <td><?php echo oci_result($stid, 'ID PROVEEDOR'); ?></td>
                     <td><?php echo oci_result($stid, 'PROYECTO'); ?></td>
                     <td><?php echo oci_result($stid, 'SERVICIO'); ?></td>
                     <td><?php echo oci_result($stid, 'IN SERVICIO'); ?></td>
-                    <td><?php echo oci_result($stid, 'FN SERVICIO'); ?></td>
-                    <td><?php echo oci_result($stid, 'ESTADO'); ?></td>
-                    <td><?php echo oci_result($stid, 'N CONTRATO'); ?></td>
+                    <td><?php echo oci_result($stid, 'FN SERVICIO')?></td>
                     <td><?php echo oci_result($stid, 'MENSUALIDAD COP'); ?></td>
                     <td><?php echo oci_result($stid, 'MENSUALIDAD USD'); ?></td>
+                    <td><a target="_blank" href="enlaceDt.php?idetb=<?php echo $idetb ?>" ><button type='button' class='btn btn-primary'>Ver mas</button></a></td> 
                 </tr>
             <?php
            
