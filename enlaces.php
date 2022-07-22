@@ -46,11 +46,18 @@ background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%
     $fila = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS);
     $conteo = implode(" ", $fila);
 
+    if($conteo == 0){
+      $msg = "No hay enlaces que mostrar";
+    }else{
+      $msg = "";
+    }
+
     
     ?>
 <div class="container">
     <br>
     <h1>Total de enlances: <?php echo $conteo;?></h1>
+    <h3><?php echo $msg;?></h3>
     <p>
     
   </p>
@@ -58,11 +65,12 @@ background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%
     <?php
 include('db.php');
 $idEnlace = $_GET['contrato'];
-$cons='SELECT C.ID_ETB_ENLACE_CAV "ID ETB",C.NOMBRE_CLIENTE "CLIENTE",C.PROYECTO "PROYECTO",C.TIPO_SERVICIO "SERVICIO",C.INICIO_SERVICIO "IN SERVICIO",
+$cons='SELECT C.ID_ETB_ENLACE_CAV "ID ETB",C.NOMBRE_CLIENTE "CLIENTE",C.PROYECTO "PROYECTO",S.MON_CON "MONEDA",TP.TIP_SERV "SERVICIO",C.INICIO_SERVICIO "IN SERVICIO",
 C.FIN_SERVICIO "FN SERVICIO",C.ESTADO "ESTADO",C.NUMERO_DE_CONTRATO "N CONTRATO",C.COP_MENSUALIDAD "MENSUALIDAD COP",C.USD_MENSUALIDAD "MENSUALIDAD USD",
 C.ID_PROVEEDOR "ID PROVEEDOR"
 FROM TBL_UM_ENLACES C
 INNER JOIN TBL_UM_CONTRATOS S ON C.NUMERO_DE_CONTRATO=S.IDCONTRATO
+INNER JOIN TBL_UM_TIP_SERV TP ON C.TIPO_SERVICIO = TP.TIPSERV
 WHERE C.NUMERO_DE_CONTRATO ='.$idEnlace;
 
         $stid = oci_parse($conexión, $cons);
@@ -81,15 +89,14 @@ WHERE C.NUMERO_DE_CONTRATO ='.$idEnlace;
         print " <thead class='thead-light'>\n";
         print "<tr>\n";
             print "<td><strong>ESTADO</strong></td>";
-            print "<td><strong>LIMITE</strong></td>";
+            print "<td><strong>VENCIMIENTO</strong></td>";
             print "<td><strong>ID ENLACE</strong></td>";
             print "<td><strong>CLIENTE</strong></td>";
-            print "<td><strong>PROYECTO</strong></td>";
             print "<td><strong>TIPO SERVICIO</strong></td>";
             print "<td><strong>INICIO SERVICIO</strong></td>";
             print "<td><strong>FIN SERVICIO</strong></td>";
-            print "<td><strong>MENSUALIDAD COP</strong></td>";
-            print "<td><strong>MENSUALIDAD USD</strong></td>";
+            print "<td><strong>MONEDA</strong></td>";
+            print "<td><strong>MENSUALIDAD</strong></td>";
             print "<td><strong>Mas Información</strong></td>";
         print "</tr>\n";
         print " </thead>\n";
@@ -99,6 +106,15 @@ WHERE C.NUMERO_DE_CONTRATO ='.$idEnlace;
 
         $fechaAc = date("d-m-y");
         while ($fila = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+
+          $vusd = oci_result($stid, 'MENSUALIDAD COP');
+          $vcop = oci_result($stid, 'MENSUALIDAD USD');
+          $moneda = oci_result($stid, 'MONEDA');
+          if($moneda = "USD"){
+            $vlr = $vusd;
+          }else{
+            $vlr = $vcop;
+          }
             print "<tr>\n";
             ?>
                 <tr>
@@ -108,17 +124,15 @@ WHERE C.NUMERO_DE_CONTRATO ='.$idEnlace;
                      $dateDifference = abs(strtotime($fechaCon) - strtotime($fechaAc));
 
                       $days = floor($dateDifference / (60 * 60 * 24));
-                      echo $days . "Dias";
-                      //echo $dateDifference;
 
                       if($days <= $fechaAc){
                         $color = "#000 ";
                       }else{
                         if($days > 60){
                           $color = "#6CD410";
-                        }else if($fechaRes > 30){
+                        }else if($days > 30){
                           $color = "#F1C40F";
-                        }else if($fechaRes <= 0){
+                        }else if($days <= 0){
                           $color = "#E74C3C ";
                         }
                       }
@@ -132,12 +146,11 @@ WHERE C.NUMERO_DE_CONTRATO ='.$idEnlace;
                     </td>
                     <td><?php $idetb = oci_result($stid, 'ID ETB'); echo $idetb ?></td>
                     <td><?php echo oci_result($stid, 'CLIENTE'); ?></td>
-                    <td><?php echo oci_result($stid, 'PROYECTO'); ?></td>
                     <td><?php echo oci_result($stid, 'SERVICIO'); ?></td>
                     <td><?php echo oci_result($stid, 'IN SERVICIO'); ?></td>
                     <td><?php echo oci_result($stid, 'FN SERVICIO')?></td>
-                    <td><?php echo oci_result($stid, 'MENSUALIDAD COP'); ?></td>
-                    <td><?php echo oci_result($stid, 'MENSUALIDAD USD'); ?></td>
+                    <td><?php echo $moneda ?></td>
+                    <td><?php echo $vlr ?></td>
                     <td><a target="_blank" href="enlaceDt.php?idetb=<?php echo $idetb ?>" ><button type='button' class='btn btn-primary'>Ver mas</button></a></td> 
                 </tr>
             <?php

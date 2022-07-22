@@ -195,7 +195,7 @@ WHERE C.IDCONTRATO = '.$contrato;
                 <p><?php echo $vice?></p>
             </div>
             <div class="div16 divCont">
-                <h5>SUP_I</h5>
+                <h5>SUPERVISOR SGC</h5>
                 <br>
                 <p><?php echo $supI?></p>
             </div>

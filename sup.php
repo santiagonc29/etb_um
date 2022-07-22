@@ -12,11 +12,11 @@
   <style>
     .contM{
       display: none;
-      /* position: absolute; 
+       position: absolute; 
       left: 250px; 
-      top: 10px; */
+      top: 10px; 
       margin-top:20px;
-      width:20%;
+      width:30%;
       background: #F2F4F4;
       padding: 10px;
       border-radius: 1rem;
@@ -89,8 +89,8 @@ background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%
         <a href="index.html"><button class="btn btn-danger btn-lg" >Salir</button></a>
         <div></div>
 </nav>
-<!-- style="position: relative; -->
-<div class="container">
+<!--  -->
+<div class="container" style="position: relative;">
 <?php 
     $Usuario = $_GET['usuario'];
 
