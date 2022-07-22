@@ -9,6 +9,19 @@
     <title><?php $proveedor = $_GET['proveedor']; echo $proveedor ?> </title>
 </head>
 <body>
+  <style>
+    .over{
+      width:95%;
+      margin: auto;
+      padding: 20px;
+      overflow: auto;
+      height: 700px;
+      box-shadow: 15px 15px 15px -3px rgba(0,0,0,0.1);
+      border-radius: 1rem;
+      background: #fff;
+      margin-top:20px;
+    }
+  </style>
 <!-- Image and text -->
 <nav class="navbar navbar-light nav-justified" style="background: rgb(0,255,255);
 background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%); color: white;">
@@ -62,6 +75,9 @@ background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%
     
   </p>
     <br>
+    
+</div>
+  <div class="over">
     <?php
 include('db.php');
 $idEnlace = $_GET['contrato'];
@@ -88,6 +104,7 @@ WHERE C.NUMERO_DE_CONTRATO ='.$idEnlace;
         print "<table class='table table-striped' border='1'>\n";
         print " <thead class='thead-light'>\n";
         print "<tr>\n";
+            print "<td><strong>#</strong></td>";
             print "<td><strong>ESTADO</strong></td>";
             print "<td><strong>VENCIMIENTO</strong></td>";
             print "<td><strong>ID ENLACE</strong></td>";
@@ -105,6 +122,7 @@ WHERE C.NUMERO_DE_CONTRATO ='.$idEnlace;
         // rojo #E74C3C 
 
         $fechaAc = date("d-m-y");
+        $i = 1;
         while ($fila = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
 
           $vusd = oci_result($stid, 'MENSUALIDAD COP');
@@ -115,15 +133,18 @@ WHERE C.NUMERO_DE_CONTRATO ='.$idEnlace;
           }else{
             $vlr = $vcop;
           }
+
+           
             print "<tr>\n";
             ?>
                 <tr>
+                    <td><?php $j = $i++; echo $j ?></td>
                     <td><?php echo oci_result($stid, 'ESTADO'); ?></td>
                     <td><?php 
                      $fechaCon = oci_result($stid, 'FN SERVICIO');
                      $dateDifference = abs(strtotime($fechaCon) - strtotime($fechaAc));
-
-                      $days = floor($dateDifference / (60 * 60 * 24));
+                     $days = floor($dateDifference / (1000 * 3600 * 24));
+                      echo $days;
 
                       if($days <= $fechaAc){
                         $color = "#000 ";

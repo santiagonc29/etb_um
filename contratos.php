@@ -30,15 +30,15 @@
             box-shadow: 15px 15px 15px -3px rgba(0,0,0,0.1);
             
         }
-        .div1 { grid-area: 1 / 1 / 2 / 2;  ;  }
-        .div2 { grid-area: 1 / 2 / 2 / 3;  }
-        .div3 { grid-area: 1 / 3 / 2 / 4;  }
-        .div4 { grid-area: 2 / 1 / 3 / 2;  }
-        .div5 { grid-area: 2 / 2 / 3 / 3;  }
-        .div6 { grid-area: 2 / 3 / 3 / 4;  }
-        .div7 { grid-area: 3 / 1 / 4 / 2;  }
-        .div8 { grid-area: 3 / 2 / 4 / 3;  }
-        .div9 { grid-area: 3 / 3 / 4 / 4;  }
+        .div1  { grid-area: 1 / 1 / 2 / 2;}
+        .div2  { grid-area: 1 / 2 / 2 / 3;}
+        .div3  { grid-area: 1 / 3 / 2 / 4;}
+        .div4  { grid-area: 2 / 1 / 3 / 2;}
+        .div5  { grid-area: 2 / 2 / 3 / 3;}
+        .div6  { grid-area: 2 / 3 / 3 / 4;}
+        .div7  { grid-area: 3 / 1 / 4 / 2;}
+        .div8  { grid-area: 3 / 2 / 4 / 3;}
+        .div9  { grid-area: 3 / 3 / 4 / 4;}
         .div10 { grid-area: 4 / 1 / 5 / 2; }
         .div11 { grid-area: 4 / 2 / 5 / 3; }
         .div12 { grid-area: 4 / 3 / 5 / 4; }
@@ -70,6 +70,7 @@ background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%
     <br>
     <h1></h1>
     <br>
+
     <?php
 include('db.php');
 $contrato = $_GET['contrato'];
@@ -118,6 +119,7 @@ WHERE C.IDCONTRATO = '.$contrato;
         }
 
 ?>
+
         <div class="parent">
             <div class="div1 divCont">
                 <H5>CONTRATO</H5>

@@ -10,14 +10,30 @@
 </head>
 <body>
   <style>
+    body{
+        background: #F2F4F4;
+    }
+
+    .over{
+      width:95%;
+      margin: auto;
+      padding: 20px;
+      overflow: auto;
+      height: 700px;
+      box-shadow: 15px 15px 15px -3px rgba(0,0,0,0.1);
+      border-radius: 1rem;
+      background: #fff;
+      margin-top:20px;
+    }
+
     .contM{
       display: none;
-       position: absolute; 
+      position: absolute; 
       left: 250px; 
       top: 10px; 
       margin-top:20px;
       width:30%;
-      background: #F2F4F4;
+      background: #FFF;
       padding: 10px;
       border-radius: 1rem;
       box-shadow: 15px 15px 15px -3px rgba(0,0,0,0.1);
@@ -77,8 +93,6 @@ background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%
              
             //   //convertimos los datos de array a string
             //   $arc = implode(" ", $fila); 
-              
-            //   $fecha = date("Y-m-d", strtotime($arc));
                $fecha = "";
               
                 print "<h4 class='tltSup'>Supervisor: ".$sup."</h4>";
@@ -118,38 +132,38 @@ background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%
   <br>
   <div class="contM" id="contM">
   <?php 
-$Usuario = $_GET['usuario'];
+      $Usuario = $_GET['usuario'];
 
-$cons = "select count(idcontrato),tipo from tbl_um_contratos where IDSUPERVISOR = " .$Usuario. " group by tipo order by tipo";
+      $cons = "select count(idcontrato),tipo from tbl_um_contratos where IDSUPERVISOR = " .$Usuario. " group by tipo order by tipo";
 
-$stid = oci_parse($conexión, $cons);
-if (!$stid) {
-    $e = oci_error($conexión);
-    trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
-}// Realizar la lógica de la consulta
+      $stid = oci_parse($conexión, $cons);
+      if (!$stid) {
+          $e = oci_error($conexión);
+          trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+      }// Realizar la lógica de la consulta
 
-$r = oci_execute($stid);
-if (!$r) {
-    $e = oci_error($stid);
-    trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
-}// Obtener los resultados de la consulta
+      $r = oci_execute($stid);
+      if (!$r) {
+          $e = oci_error($stid);
+          trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+      }// Obtener los resultados de la consulta
 
-print "<table>\n";
-print "<tr>\n";
-    print "<td><strong>CANT</strong></td>";
-    print "<td><center><strong>TIPO</strong></center></td>";
-    print "</tr>\n";
-while ($fila = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
-    print "<tr>\n";
-    foreach ($fila as $elemento) {
-        print "    <td>" . ($elemento !== null ? htmlentities($elemento, ENT_QUOTES) : "") . "</td>\n";
-    }
-    print "</tr>\n";
-}
+      print "<table>\n";
+      print "<tr>\n";
+          print "<td><strong>CANT</strong></td>";
+          print "<td><center><strong>TIPO</strong></center></td>";
+          print "</tr>\n";
+      while ($fila = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+          print "<tr>\n";
+          foreach ($fila as $elemento) {
+              print "    <td>" . ($elemento !== null ? htmlentities($elemento, ENT_QUOTES) : "") . "</td>\n";
+          }
+          print "</tr>\n";
+      }
 
-print "</table>\n";
+      print "</table>\n";
 
-?>
+    ?>
   </div>
 <?php
 include('db.php');
@@ -183,12 +197,15 @@ ORDER BY C.IDCONTRATO ASC';
             trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
         }// Obtener los resultados de la consulta
         $fechaAc = date("d-m-y");
+        $i = 1;
 ?>
 </div>
+  <div class="over">
     <div class="cont" >
        <table class="table table-striped" border="1"> 
         <thead class="thead-dark">
         <tr>
+            <td><strong>#</strong></td>
             <td><strong>CONTRATO</strong></td>
             <td><strong>PROVEEDOR</strong></td>
             <td><strong>MONEDA CONTRATO</strong></td>
@@ -209,6 +226,7 @@ ORDER BY C.IDCONTRATO ASC';
             ?>
             
                 <tr>
+                    <td><?php $j = $i++; echo $j ?></td>
                     <td><?php $contrato = oci_result($stid, 'CONTRATO'); echo $contrato ?></td>
                     <td><?php $proveedor = oci_result($stid, 'PROVEEDOR'); echo $proveedor ?></td>
                     <td><?php echo oci_result($stid, 'MONEDA CONTRATO') ?></td>
@@ -261,6 +279,7 @@ oci_close($conexión);
 
 ?>
 <!-- fin del div cont -->
+    </div>
   </div>
 </div>
 
