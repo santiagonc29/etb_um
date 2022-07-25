@@ -10,8 +10,70 @@
 </head>
 <body>
   <style>
+
+#menu ul li {
+    background-color:#34495E;
+    
+}
+
+#menu ul {
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+
+#menu ul a {
+  display:block;
+  color:#fff;
+  text-decoration:none;
+  font-weight:400;
+  font-size:15px;
+  padding:10px;
+  font-family:"HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  
+  border-radius: 1rem;
+}
+
+#menu ul li {
+  position:relative;
+  float:left;
+  margin:0;
+  padding:0;
+}
+
+#menu ul li:hover {
+  background:#5b78a7;
+}
+
+#menu ul ul {
+  display:none;
+  position:absolute;
+  top:100%;
+  left:0;
+  padding:0;
+}
+
+#menu ul ul li {
+  float:none;
+  width:150px
+}
+
+#menu ul ul a {
+  line-height:120%;
+  padding:10px 15px;
+}
+
+#menu ul li:hover > ul {
+  display:block;
+}
     body{
         background: #F2F4F4;
+    }
+
+    .contBtn{
+      width:30%;
     }
 
     .over{
@@ -28,11 +90,10 @@
 
     .contM{
       display: none;
-      position: absolute; 
+      /* position: absolute;  
       left: 250px; 
-      top: 10px; 
-      margin-top:20px;
-      width:30%;
+      top: 10px; */
+      margin-top:0px;
       background: #FFF;
       padding: 10px;
       border-radius: 1rem;
@@ -46,7 +107,7 @@
 
   </style>
 <!-- Image and text -->
-<nav class="navbar navbar-light nav-justified" style="background: rgb(0,255,255);
+<nav id="menu" class="navbar navbar-light nav-justified" style="background: rgb(0,255,255);
 background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%); color: white;">
     <div></div>
         <a class="navbar-brand" href="#">
@@ -100,11 +161,22 @@ background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%
              
         ?>
         </div>
+        <ul>
+  
+  <li><a href="#">Consultar por id</a>
+    <ul>
+      <li><a href="enlacescons.php" target="_blank">Enlaces</a></li>
+      <li><a href="#">Proveedores</a></li>
+      <li><a href="#">Contratos</a></li>
+    </ul>
+  </li>
+</ul>
         <a href="index.html"><button class="btn btn-danger btn-lg" >Salir</button></a>
         <div></div>
 </nav>
-<!--  -->
-<div class="container" style="position: relative;">
+<!-- style="position: relative;" -->
+<div class="container">
+  
 <?php 
     $Usuario = $_GET['usuario'];
 
@@ -128,9 +200,13 @@ background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%
     ?>
   <br>
   <h1>Total de contratos:  <?php echo $conteo;?></h1> 
-  <button class="btn btn-primary" onclick="mostrar()">Mostrar tipos de contratos</button>
+  <div class="row">
+    <div class="contBtn">
+      <button class="btn btn-primary col-lg-6 btnM" onclick="mostrar()"> tipos de contratos</button>
+    </div>
+  
   <br>
-  <div class="contM" id="contM">
+  <div class="contM col-lg-4" id="contM">
   <?php 
       $Usuario = $_GET['usuario'];
 
@@ -164,6 +240,7 @@ background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%
       print "</table>\n";
 
     ?>
+    </div>
   </div>
 <?php
 include('db.php');
@@ -262,7 +339,7 @@ ORDER BY C.IDCONTRATO ASC';
                         </path>
                       </svg>
                     </td>
-                    <td><a target="_blank" href="enlaces.php?contrato=<?php echo $contrato ?>&proveedor= <?php echo $proveedor?>" ><button type='button' class='btn btn-primary'>Enlace</button></a></td>
+                    <td><a target="_blank" href="enlaces.php?contrato=<?php echo $contrato ?>&proveedor= <?php echo $proveedor?>&Usuario= <?php echo $Usuario?>" ><button type='button' class='btn btn-primary'>Enlace</button></a></td>
                     
                     <td><a target="_blank" href="contratos.php?contrato=<?php echo $contrato ?>" ><button type='button' class='btn btn-primary'>Ver mas</button></a></td>
                     </td>
@@ -346,14 +423,19 @@ oci_close($conexión);
 <script src="scripts/bootstrap.min.js"></script>
 <script src="scripts/bootstrap.bundle.min.js"></script>
 <script>
+
+var x = document.getElementById("contM");
+
   function mostrar() {
-    var x = document.getElementById("contM");
+         
     if (x.style.display === "block") {
-        x.style.display = "none";
+          x.style.display = "none";
     } else {
         x.style.display = "block";
     }
-}
+  }
+
+ 
 </script>
 </body>
 </html>

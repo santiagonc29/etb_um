@@ -1,3 +1,6 @@
+<?php 
+$Usuario = $_GET['Usuario'];
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -35,7 +38,9 @@ background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%
         </div>
         
         <div></div>
-          <button type='button' class='btn btn-danger' onclick="window.close()">Cerrar</button>
+        <button type='button' class='btn btn-danger' onclick="window.close()">volver</button>
+         <!-- Boton volver   -->
+         <!-- <a href="sup.php?usuario="<?php //echo $Usuario?> ><button type='button' class='btn btn-danger'>volver</button></a>  -->
         <div></div>
 </nav>
 <?php
@@ -141,9 +146,17 @@ WHERE C.NUMERO_DE_CONTRATO ='.$idEnlace;
                     <td><?php $j = $i++; echo $j ?></td>
                     <td><?php echo oci_result($stid, 'ESTADO'); ?></td>
                     <td><?php 
+
+                    
+                    // $fechaCon = oci_result($stid, 'FN SERVICIO');
+                    // $dias = (strtotime($fechaCon)-strtotime($fechaAc))/86400;
+                    // $days = abs($dias); $dias = floor($dias);
+                    // echo $days;
+                     
                      $fechaCon = oci_result($stid, 'FN SERVICIO');
-                     $dateDifference = abs(strtotime($fechaCon) - strtotime($fechaAc));
-                     $days = floor($dateDifference / (1000 * 3600 * 24));
+                     $dateDifference = strtotime($fechaAc) - strtotime($fechaCon);
+                     $dateAbs = abs($dateDifference);
+                     $days = floor($dateAbs / (1000 * 3600 * 24));
                       echo $days;
 
                       if($days <= $fechaAc){
@@ -153,7 +166,7 @@ WHERE C.NUMERO_DE_CONTRATO ='.$idEnlace;
                           $color = "#6CD410";
                         }else if($days > 30){
                           $color = "#F1C40F";
-                        }else if($days <= 0){
+                        }else if($days = 0){
                           $color = "#E74C3C ";
                         }
                       }
@@ -186,6 +199,7 @@ oci_free_statement($stid);
 oci_close($conexión);
 
     ?>
+</div>
 </div>
 
 <!-- Site footer -->

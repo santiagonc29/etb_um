@@ -24,7 +24,7 @@ background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%
 <h1>Administrador</h1>
 <?php
 include('db.php');
-$cons='SELECT C.IDCONTRATO "CONTRATO", P.PROVEEDOR, C.MON_CON "MONEDA CONTRATO", C.VR_CONTRATO "VALOR CONTRATO",
+$cons='SELECT C.IDCONTRATO "CONTRATO", P.PROVEEDOR "PROVEEDOR", C.MON_CON "MONEDA CONTRATO", C.VR_CONTRATO "VALOR CONTRATO",
 
 C.VR_POSICION "FACTURADO", C.VR_IVA_FACTURADO "IVA FACTURADO",
 
@@ -32,11 +32,11 @@ C.VR_POSICION "FACTURADO", C.VR_IVA_FACTURADO "IVA FACTURADO",
 
 FROM TBL_UM_CONTRATOS C
 
-INNER JOIN TBL_UM_SUPERVISORES S ON C.IDSUPERVISOR=S.IDSUPERVISOR
+INNER JOIN TBL_UM_SUPERVISORES S ON C.IDSUPERVISOR=S.LOGIN
 
 INNER JOIN TBL_UM_PROVEEDORES P ON C.IDPROVEEDOR=P.IDPROVEEDOR
 
-GROUP BY C.IDCONTRATO, P.PROVEEDOR, S.IDSUPERVISOR, S.SUPERVISOR, C.ARCHIVO, C.MON_CON,C.VR_CONTRATO,C.VR_POSICION,C.VR_IVA_FACTURADO
+GROUP BY C.IDCONTRATO, P.PROVEEDOR, S.LOGIN, S.SUPERVISOR, C.ARCHIVO, C.MON_CON,C.VR_CONTRATO,C.VR_POSICION,C.VR_IVA_FACTURADO
 
 ORDER BY C.IDCONTRATO ASC';
 
@@ -51,12 +51,12 @@ ORDER BY C.IDCONTRATO ASC';
             $e = oci_error($stid);
             trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
         }// Obtener los resultados de la consulta
-
+        $i = 1;
         ?>
         <table class="table table-striped" border="1">
         <thead class="thead-dark">
         <tr>
-            <td><strong>ID</strong></td>
+            <td><strong>#</strong></td>
             <td><strong>CONTRATO</strong></td>
             <td><strong>PROVEEDOR</strong></td>
             <td><strong>MONEDA CONTRATO</strong></td>
@@ -75,6 +75,7 @@ ORDER BY C.IDCONTRATO ASC';
             ?>
             
                 <tr>
+                    <td><?php $j = $i++; echo $j ?></td>
                     <td><?php $contrato = oci_result($stid, 'CONTRATO'); echo $contrato ?></td>
                     <td><?php echo oci_result($stid, 'PROVEEDOR') ?></td>
                     <td><?php echo oci_result($stid, 'MONEDA CONTRATO') ?></td>
