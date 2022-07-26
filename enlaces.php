@@ -88,7 +88,7 @@ include('db.php');
 $idEnlace = $_GET['contrato'];
 $cons='SELECT C.ID_ETB_ENLACE_CAV "ID ETB",C.NOMBRE_CLIENTE "CLIENTE",C.PROYECTO "PROYECTO",S.MON_CON "MONEDA",TP.TIP_SERV "SERVICIO",C.INICIO_SERVICIO "IN SERVICIO",
 C.FIN_SERVICIO "FN SERVICIO",C.ESTADO "ESTADO",C.NUMERO_DE_CONTRATO "N CONTRATO",C.COP_MENSUALIDAD "MENSUALIDAD COP",C.USD_MENSUALIDAD "MENSUALIDAD USD",
-C.ID_PROVEEDOR "ID PROVEEDOR"
+C.ID_PROVEEDOR "ID PROVEEDOR", C.FIN_SERVICIO - SYSDATE "TIEMPO CALCULADO"
 FROM TBL_UM_ENLACES C
 INNER JOIN TBL_UM_CONTRATOS S ON C.NUMERO_DE_CONTRATO=S.IDCONTRATO
 INNER JOIN TBL_UM_TIP_SERV TP ON C.TIPO_SERVICIO = TP.TIPSERV
@@ -126,13 +126,14 @@ WHERE C.NUMERO_DE_CONTRATO ='.$idEnlace;
         // amarillo #F1C40F 
         // rojo #E74C3C 
 
-        $fechaAc = date("d-m-y");
         $i = 1;
         while ($fila = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
 
           $vusd = oci_result($stid, 'MENSUALIDAD COP');
+          $tc = oci_result($stid, 'TIEMPO CALCULADO');
           $vcop = oci_result($stid, 'MENSUALIDAD USD');
           $moneda = oci_result($stid, 'MONEDA');
+          $dias = intval($tc)+1;
           if($moneda = "USD"){
             $vlr = $vusd;
           }else{
@@ -147,26 +148,14 @@ WHERE C.NUMERO_DE_CONTRATO ='.$idEnlace;
                     <td><?php echo oci_result($stid, 'ESTADO'); ?></td>
                     <td><?php 
 
-                    
-                    // $fechaCon = oci_result($stid, 'FN SERVICIO');
-                    // $dias = (strtotime($fechaCon)-strtotime($fechaAc))/86400;
-                    // $days = abs($dias); $dias = floor($dias);
-                    // echo $days;
-                     
-                     $fechaCon = oci_result($stid, 'FN SERVICIO');
-                     $dateDifference = strtotime($fechaAc) - strtotime($fechaCon);
-                     $dateAbs = abs($dateDifference);
-                     $days = floor($dateAbs / (1000 * 3600 * 24));
-                      echo $days;
-
-                      if($days <= $fechaAc){
+                      if($dias <= 0){
                         $color = "#000 ";
                       }else{
-                        if($days > 60){
+                        if($dias > 90){
                           $color = "#6CD410";
-                        }else if($days > 30){
+                        }else if($dias > 60){
                           $color = "#F1C40F";
-                        }else if($days = 0){
+                        }else if($days = 30){
                           $color = "#E74C3C ";
                         }
                       }

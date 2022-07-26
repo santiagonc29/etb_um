@@ -249,7 +249,7 @@ $cons='SELECT C.IDCONTRATO "CONTRATO", P.PROVEEDOR, C.MON_CON "MONEDA CONTRATO",
 
 C.VR_POSICION "FACTURADO", C.VR_IVA_FACTURADO "IVA FACTURADO",
 
-(C.VR_CONTRATO - (C.VR_POSICION + C.VR_IVA_FACTURADO)) "SALDO CONTRATO"
+(C.VR_CONTRATO - (C.VR_POSICION + C.VR_IVA_FACTURADO)) "SALDO CONTRATO",C.FECHA_FIN - SYSDATE "TIEMPO CALCULADO"
 
 FROM TBL_UM_CONTRATOS C
 
@@ -290,8 +290,8 @@ ORDER BY C.IDCONTRATO ASC';
             <td><strong>FACTURADO</strong></td>
             <td><strong>IVA FACTURADO</strong></td>
             <td><strong>SALDO CONTRATO</strong></td>
-            <td><strong>p.p.p</strong></td>
-            <td><strong>p.p.e</strong></td>
+            <td><strong>P.P.P</strong></td>
+            <td><strong>P.P.E</strong></td>
             <td><strong>Vencimiento</strong></td>
             <td><strong>ENLACES</strong></td>
             <td><strong>MAS INFORMACIÓN</strong></td>
@@ -299,6 +299,9 @@ ORDER BY C.IDCONTRATO ASC';
          </thead>
     <?php
         while ($fila = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+          
+          $tc = oci_result($stid, 'TIEMPO CALCULADO');
+          $dias = intval($tc)+1;
             print "<tr>\n";
             ?>
             
@@ -314,20 +317,14 @@ ORDER BY C.IDCONTRATO ASC';
                     <td><?php echo "Sin datos" ?></td>
                     <td><?php echo "SIn datos" ?></td>
                     <td><?php 
-                      $fechaCon = oci_result($stid, 'FECHA FIN');
-                      $dateDifference = abs(strtotime($fechaCon) - strtotime($fechaAc));
-
-                      $days = floor($dateDifference / (60 * 60 * 24));
-                      //echo $dateDifference;
-
-                      if($days <= $fechaAc){
+                       if($dias <= 0){
                         $color = "#000 ";
                       }else{
-                        if($days > 60){
+                        if($dias > 90){
                           $color = "#6CD410";
-                        }else if($days > 30){
+                        }else if($dias > 60){
                           $color = "#F1C40F";
-                        }else if($days <= 0){
+                        }else if($days = 30){
                           $color = "#E74C3C ";
                         }
                       }
