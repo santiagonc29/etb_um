@@ -27,7 +27,7 @@ while ($fila = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
         switch($cargo){
     
         case "ADMINISTRADOR":
-            header('location: home.php');
+            header('location: admin/inicio.php');
             break;
     
         case "SUPERVISOR":

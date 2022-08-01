@@ -3,71 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="shortcut icon" href="assets/logos/LOGO_ETB.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="shortcut icon" href="../assets/logos/LOGO_ETB.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Contratos</title>
 </head>
 <body>
   <style>
-
-#menu ul li {
-    background-color:#34495E;
-    
-}
-
-#menu ul {
-  list-style:none;
-  margin:0;
-  padding:0;
-}
-
-#menu ul a {
-  display:block;
-  color:#fff;
-  text-decoration:none;
-  font-weight:400;
-  font-size:15px;
-  padding:10px;
-  font-family:"HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  text-transform:uppercase;
-  letter-spacing:1px;
-  
-  border-radius: 1rem;
-}
-
-#menu ul li {
-  position:relative;
-  float:left;
-  margin:0;
-  padding:0;
-}
-
-#menu ul li:hover {
-  background:#5b78a7;
-}
-
-#menu ul ul {
-  display:none;
-  position:absolute;
-  top:100%;
-  left:0;
-  padding:0;
-}
-
-#menu ul ul li {
-  float:none;
-  width:150px
-}
-
-#menu ul ul a {
-  line-height:120%;
-  padding:10px 15px;
-}
-
-#menu ul li:hover > ul {
-  display:block;
-}
     body{
         background: #F2F4F4;
     }
@@ -90,15 +32,13 @@
 
     .contM{
       display: none;
-      /* position: absolute;  
-      left: 250px; 
-      top: 10px; */
       margin-top:0px;
       background: #FFF;
       padding: 10px;
       border-radius: 1rem;
       box-shadow: 15px 15px 15px -3px rgba(0,0,0,0.1);
 }
+
 
 .cont{
   margin-top:20px;
@@ -111,7 +51,7 @@
 background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%); color: white;">
     <div></div>
         <a class="navbar-brand" href="#">
-            <img src="assets/logos/Logo-blanco-tagline.png" width="100" height="auto" class="d-inline-block align-top" alt="">
+            <img src="../assets/logos/Logo-blanco-tagline.png" width="100" height="auto" class="d-inline-block align-top" alt="">
         </a>
         <div>
         <?php
@@ -161,22 +101,13 @@ background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%
              
         ?>
         </div>
-        <ul>
-  
-  <li><a href="#">Consultar por id</a>
-    <ul>
-      <li><a href="enlacescons.php" target="_blank">Enlaces</a></li>
-      <li><a href="#">Proveedores</a></li>
-      <li><a href="#">Contratos</a></li>
-    </ul>
-  </li>
-</ul>
-        <a href="index.html"><button class="btn btn-danger btn-lg" >Salir</button></a>
+        <a href="enlacescons.php"><button class="btn btn-outline-light">Consultar</button></a>
+        <a href="../index.html"><button class="btn btn-outline-danger " >Salir</button></a>
         <div></div>
 </nav>
 <!-- style="position: relative;" -->
-<div class="container">
-  
+<div class="container" >
+ 
 <?php 
     $Usuario = $_GET['usuario'];
 
@@ -198,11 +129,12 @@ background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%
 
     
     ?>
+    
   <br>
   <h1>Total de contratos:  <?php echo $conteo;?></h1> 
   <div class="row">
     <div class="contBtn">
-      <button class="btn btn-primary col-lg-6 btnM" onclick="mostrar()"> tipos de contratos</button>
+      <button class="btn btn-info col-lg-6 btnM" onclick="mostrar()"> tipos de contratos</button>
     </div>
   
   <br>
@@ -315,7 +247,7 @@ ORDER BY C.IDCONTRATO ASC';
                     <td><?php echo oci_result($stid, 'IVA FACTURADO') ?></td>
                     <td><?php echo oci_result($stid, 'SALDO CONTRATO') ?></td>
                     <td><?php echo "Sin datos" ?></td>
-                    <td><?php echo "SIn datos" ?></td>
+                    <td><?php echo "Sin datos" ?></td>
                     <td><?php 
                        if($dias <= 0){
                         $color = "#000 ";
@@ -330,15 +262,15 @@ ORDER BY C.IDCONTRATO ASC';
                       }
                       
                       ?>
-                      <svg viewbox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <svg viewbox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
                         <path d="M 0, 28 C 0, 12.040000000000001 12.040000000000001, 0 28, 0 S 56, 12.040000000000001 56, 28 43.96, 56 28, 56 0, 43.96 0, 28
                          " fill="<?php echo $color ?>" transform="rotate(0,100,100) translate(72 72)">
                         </path>
                       </svg>
                     </td>
-                    <td><a target="_blank" href="enlaces.php?contrato=<?php echo $contrato ?>&proveedor= <?php echo $proveedor?>&Usuario= <?php echo $Usuario?>" ><button type='button' class='btn btn-primary'>Enlace</button></a></td>
-                    
-                    <td><a target="_blank" href="contratos.php?contrato=<?php echo $contrato ?>" ><button type='button' class='btn btn-primary'>Ver mas</button></a></td>
+                    <td><a href="enlaces.php?contrato=<?php echo $contrato ?>&proveedor= <?php echo $proveedor?>&Usuario= <?php echo $Usuario?>" ><button type='button' class='btn btn-light'>Enlace</button></a></td>
+
+                    <td><a href="contratos.php?contrato=<?php echo $contrato ?>" ><button type='button' class='btn btn-light'>Ver mas</button></a></td>
                     </td>
                 </tr>
             <?php
@@ -420,6 +352,16 @@ oci_close($conexión);
 <script src="scripts/bootstrap.min.js"></script>
 <script src="scripts/bootstrap.bundle.min.js"></script>
 <script>
+
+var c = document.getElementById("divCons");
+  function consluta(){
+   
+    if (c.style.display === "block") {
+          c.style.display = "none";
+    } else {
+        c.style.display = "block";
+    }
+  }
 
 var x = document.getElementById("contM");
 

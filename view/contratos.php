@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="shortcut icon" href="assets/logos/LOGO_ETB.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="shortcut icon" href="../assets/logos/LOGO_ETB.png" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title><?php $contrato = $_GET['contrato']; echo $contrato ?> </title>
 </head>
@@ -55,14 +55,14 @@
 background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%); color: white;">
     <div></div>
         <a class="navbar-brand" href="#">
-            <img src="assets/logos/Logo-blanco-tagline.png" width="100" height="auto" class="d-inline-block align-top" alt="">
+            <img src="../assets/logos/Logo-blanco-tagline.png" width="100" height="auto" class="d-inline-block align-top" alt="">
         </a>
         <div>
             <h4>Contrato N°: <?php $idcont = $_GET['contrato']; echo $idcont?></h4>
         </div>
         
         <div></div>
-          <button type='button' class='btn btn-danger' onclick="window.close()">Cerrar</button>
+        <?php echo '<a href="'.$_SERVER['HTTP_REFERER'].'"><button type="button" class="btn btn-danger">Volver</button></a>' ?>
         <div></div>
 </nav>
 
@@ -119,7 +119,6 @@ WHERE C.IDCONTRATO = '.$contrato;
         }
 
 ?>
-
         <div class="parent">
             <div class="div1 divCont">
                 <H5>CONTRATO</H5>

@@ -6,13 +6,16 @@ $Usuario = $_GET['Usuario'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="shortcut icon" href="assets/logos/LOGO_ETB.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="shortcut icon" href="../assets/logos/LOGO_ETB.png" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title><?php $proveedor = $_GET['proveedor']; echo $proveedor ?> </title>
 </head>
 <body>
   <style>
+    body{
+        background: #F2F4F4;
+    }
     .over{
       width:95%;
       margin: auto;
@@ -30,7 +33,7 @@ $Usuario = $_GET['Usuario'];
 background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%); color: white;">
     <div></div>
         <a class="navbar-brand" href="#">
-            <img src="assets/logos/Logo-blanco-tagline.png" width="100" height="auto" class="d-inline-block align-top" alt="">
+            <img src="../assets/logos/Logo-blanco-tagline.png" width="100" height="auto" class="d-inline-block align-top" alt="">
         </a>
         <div>
             <h4>Proveedor: <?php $proveedor = $_GET['proveedor']; echo $proveedor ?></h4>
@@ -38,9 +41,7 @@ background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%
         </div>
         
         <div></div>
-        <button type='button' class='btn btn-danger' onclick="window.close()">volver</button>
-         <!-- Boton volver   -->
-         <!-- <a href="sup.php?usuario="<?php //echo $Usuario?> ><button type='button' class='btn btn-danger'>volver</button></a>  -->
+        <?php echo '<a href="'.$_SERVER['HTTP_REFERER'].'"><button type="button" class="btn btn-danger">Volver</button></a>' ?>
         <div></div>
 </nav>
 <?php
@@ -130,9 +131,10 @@ WHERE C.NUMERO_DE_CONTRATO ='.$idEnlace;
         while ($fila = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
 
           $vusd = oci_result($stid, 'MENSUALIDAD COP');
-          $tc = oci_result($stid, 'TIEMPO CALCULADO');
+         
           $vcop = oci_result($stid, 'MENSUALIDAD USD');
-          $moneda = oci_result($stid, 'MONEDA');
+          $moneda = oci_result($stid, 'MONEDA'); 
+          $tc = oci_result($stid, 'TIEMPO CALCULADO');
           $dias = intval($tc)+1;
           if($moneda = "USD"){
             $vlr = $vusd;
@@ -174,7 +176,7 @@ WHERE C.NUMERO_DE_CONTRATO ='.$idEnlace;
                     <td><?php echo oci_result($stid, 'FN SERVICIO')?></td>
                     <td><?php echo $moneda ?></td>
                     <td><?php echo $vlr ?></td>
-                    <td><a target="_blank" href="enlaceDt.php?idetb=<?php echo $idetb ?>" ><button type='button' class='btn btn-primary'>Ver mas</button></a></td> 
+                    <td><a href="enlaceDt.php?idetb=<?php echo $idetb ?>" ><button type='button' class='btn btn-light'>Ver mas</button></a></td> 
                 </tr>
             <?php
            
