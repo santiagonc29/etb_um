@@ -5,8 +5,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="shortcut icon" href="../assets/logos/LOGO_ETB.png" type="image/x-icon">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/adminStyle.css">
+    <link rel="shortcut icon" href="../../assets/logos/LOGO_ETB.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     
     <title>Admin</title>
@@ -16,14 +17,86 @@
 background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%); color: white;">
     <div></div>
         <a class="navbar-brand" href="#">
-            <img src="../assets/logos/Logo-blanco-tagline.png" width="100" height="auto" class="d-inline-block align-top" alt="">
+            <img src="../../assets/logos/Logo-blanco-tagline.png" width="100" height="auto" class="d-inline-block align-top" alt="">
         </a>
         <h2>Administrador</h2>
-        <a href="../index.html"><button class="btn btn-danger btn-lg" >Salir</button></a>
+        <?php echo '<a href="'.$_SERVER['HTTP_REFERER'].'"><button type="button" class="btn btn-danger">Volver</button></a>' ?>
         <div></div>
 </nav>
 <div class="container">
 <h1>Administrador</h1>
+
+<div class="parent">
+  <!-- tarjeta usuarios -->
+
+  <div class="div1">
+    <a class="link" href="clientes.php">
+    <div class="card">
+      <div class="face face1">
+        <div class="content">
+              <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#fff" class="bi bi-people-fill" viewBox="0 0 16 16">
+                <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                <path fill-rule="evenodd" d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z"/>
+                <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
+              </svg>
+          <h3>Usuarios</h3>
+        </div>
+      </div>
+      <div class="face face2">
+        <div class="content">
+          <p>Acá pordra agregar, moficar, revisar e inhabilitar usuarios. </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</a>
+<!-- tarjeta contratos -->
+
+  <div class="div2"> 
+    <a class="link" href="facturas.php">
+    <div class="card">
+      <div class="face face1">
+        <div class="content">
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#fff" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
+              <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
+              <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+            </svg>
+          <h3>Contratos</h3>
+        </div>
+      </div>
+      <div class="face face2">
+        <div class="content">
+          <p>Acá prodra agregar, modificar o revisar contratos.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</a>
+<!-- tarjeta conotratos -->
+  
+    <div class="div3">
+      <a class="link" href=""> 
+      <div class="card">
+        <div class="face face1">
+          <div class="content">
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#fff" class="bi bi-three-dots" viewBox="0 0 16 16">
+              <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+            </svg>
+            <h3>Otros</h3>
+          </div>
+        </div>
+        <div class="face face2">
+          <div class="content">
+            <p>En esta seccion encontrara otros ajustes</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </a>
+  <!-- fin contenedor -->
+</div>
+
+<!-- 
 
 <center>
 
@@ -45,7 +118,7 @@ background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%
 </svg></button></center>
 
 </center>	
-		
+-->
 </div>
     <!-- Site footer -->
  <footer class="site-footer">
