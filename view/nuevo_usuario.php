@@ -21,58 +21,38 @@
     
 <body>
     
-<?php
-    
-    if($showAlert) {
-    
-        echo ' <div class="alert alert-success 
-            alert-dismissible fade show" role="alert">
-    
-            <strong>Success!</strong> Your account is 
-            now created and you can login. 
-            <button type="button" class="close"
-                data-dismiss="alert" aria-label="Close"> 
-                <span aria-hidden="true">×</span> 
-            </button> 
-        </div> '; 
-    }
-    
-    if($showError) {
-    
-        echo ' <div class="alert alert-danger 
-            alert-dismissible fade show" role="alert"> 
-        <strong>Error!</strong> '. $showError.'
-    
-       <button type="button" class="close" 
-            data-dismiss="alert aria-label="Close">
-            <span aria-hidden="true">×</span> 
-       </button> 
-     </div> '; 
-   }
-        
-    if($exists) {
-        echo ' <div class="alert alert-danger 
-            alert-dismissible fade show" role="alert">
-    
-        <strong>Error!</strong> '. $exists.'
-        <button type="button" class="close" 
-            data-dismiss="alert" aria-label="Close"> 
-            <span aria-hidden="true">×</span> 
-        </button>
-       </div> '; 
-     }
-   
-?>
+
     
 <div class="container my-4 ">
     
     <h1 class="text-center">Registro de usuarios </h1> 
+
     <form action="signup.php" method="post">
     
+
+
+    <div class="form-group"> 
+            <label for="password">ID ETB </label> 
+            <input type="idetb" class="form-control"
+            id="etb" name="IDETB"> 
+        </div>
+        <div class="form-group"> 
+        <label class="visible" for="tipo">Cargo</label>
+        <select class="form-select" id="tipo" name="tipo" required>
+          <option selected>Seleccione...</option>
+          <option value="ADMINISTRADOR">ADMINISTRADOR</option>
+          <option value="SUPERVISOR">SUPERVISOR</option>
+        </select>
+        </div>
         <div class="form-group"> 
             <label for="username">nombre de usuario</label> 
         <input type="text" class="form-control" id="username"
             name="username" aria-describedby="emailHelp">    
+        </div>
+        <div class="form-group"> 
+            <label for="username">Cedula</label> 
+        <input type="text" class="form-control" id="username"
+            name="username" aria-describedby="cedula">    
         </div>
     
         <div class="form-group"> 
@@ -87,12 +67,12 @@
                 id="cpassword" name="cpassword">
     
             <small id="emailHelp" class="form-text text-muted">
-            M
+            
             </small> 
         </div>      
     
         <button type="submit" class="btn btn-primary">
-        SignUp
+        Guardar
         </button> 
     </form> 
 </div>

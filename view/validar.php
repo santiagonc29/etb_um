@@ -35,11 +35,11 @@ if(!$r){
             switch($cargo){
         
             case "ADMINISTRADOR":
-                header('location: admin/inicio.php');
+                header('location: inicio.php');
                 break;
         
             case "SUPERVISOR":
-                header('location: sup.php?usuario='.$_POST['usuario']);
+                header('location: menu.php?usuario='.$_POST['usuario']);
                 break;
             }
         }else{

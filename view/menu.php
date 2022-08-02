@@ -3,27 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../css/style.css">
-    <link rel="stylesheet" href="../../css/adminStyle.css">
-    <link rel="shortcut icon" href="../../assets/logos/LOGO_ETB.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/adminStyle.css">
+    <link rel="shortcut icon" href="../assets/logos/LOGO_ETB.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     
-    <title>Admin</title>
+    <title>Supervisor</title>
 </head>
 <body>
 <nav class="navbar navbar-light nav-justified" style="background: rgb(0,255,255);
 background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%); color: white;">
     <div></div>
         <a class="navbar-brand" href="#">
-            <img src="../../assets/logos/Logo-blanco-tagline.png" width="100" height="auto" class="d-inline-block align-top" alt="">
+            <img src="../assets/logos/Logo-blanco-tagline.png" width="100" height="auto" class="d-inline-block align-top" alt="">
         </a>
-        <h2>Administrador</h2>
+        <div>
+        <?php
+        include('db.php');
+        $Usuario = $_GET['usuario'];
+            $cons="SELECT S.SUPERVISOR from TBL_UM_SUPERVISORES S
+            WHERE LOGIN = '$Usuario'";
+
+                    $stid = oci_parse($conexión, $cons);
+                    if (!$stid) {
+                        $e = oci_error($conexión);
+                        trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+                    }// Realizar la lógica de la consulta
+
+                    $r = oci_execute($stid);
+                    if (!$r) {
+                        $e = oci_error($stid);
+                        trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+                    }// Obtener los resultados de la consulta
+            $fila = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS);
+                
+             //convertimos los datos de array a string
+             $sup = implode(" ", $fila);
+
+              
+            print "<h4 class='tltSup'>".$sup."</h4>";
+             
+        ?>
+        </div>
         
-        <a href="../../index.html"><button class="btn btn-danger btn-lg" >Salir</button></a>
+        <a href="../index.html"><button class="btn btn-danger btn-lg" >Salir</button></a>
         <div></div>
 </nav>
 <div class="container">
-<h1>Administrador</h1>
+<h1>Menu</h1>
 
 <div class="parent">
   <!-- tarjeta usuarios -->
@@ -33,12 +60,11 @@ background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%
     <div class="card">
       <div class="face face1">
         <div class="content">
-              <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#fff" class="bi bi-people-fill" viewBox="0 0 16 16">
-                <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-                <path fill-rule="evenodd" d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z"/>
-                <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
-              </svg>
-          <h3>Usuarios</h3>
+            <svg xmlns="http://www.w3.org/2000/svg"width="50" height="50" fill="#fff" class="bi bi-journal" viewBox="0 0 16 16">
+                <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
+                <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
+            </svg>
+          <h3>Informes</h3>
         </div>
       </div>
       <div class="face face2">
@@ -52,7 +78,7 @@ background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%
 <!-- tarjeta contratos -->
 
   <div class="div2"> 
-    <a class="link" href="facturas.php">
+    <a class="link" href="sup.php?usuario=<?php echo $Usuario?>">
     <div class="card">
       <div class="face face1">
         <div class="content">
@@ -74,14 +100,14 @@ background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%
 <!-- tarjeta conotratos -->
   
     <div class="div3">
-      <a class="link" href=""> 
+      <a class="link" href="enlacescons.php"> 
       <div class="card">
         <div class="face face1">
           <div class="content">
-            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#fff" class="bi bi-three-dots" viewBox="0 0 16 16">
-              <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#fff" class="bi bi-search" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
             </svg>
-            <h3>Otros</h3>
+            <h3>Consultas</h3>
           </div>
         </div>
         <div class="face face2">

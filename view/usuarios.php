@@ -3,72 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../css/style.css">
-    <link rel="stylesheet" href="../../css/adminStyle.css">
-    <link rel="shortcut icon" href="../../assets/logos/LOGO_ETB.png" type="image/x-icon">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/adminStyle.css">
+    <link rel="shortcut icon" href="../assets/logos/LOGO_ETB.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     
-    <title>Admin</title>
+    <title>Supervisor</title>
 </head>
 <body>
 <nav class="navbar navbar-light nav-justified" style="background: rgb(0,255,255);
 background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%); color: white;">
     <div></div>
         <a class="navbar-brand" href="#">
-            <img src="../../assets/logos/Logo-blanco-tagline.png" width="100" height="auto" class="d-inline-block align-top" alt="">
+            <img src="../assets/logos/Logo-blanco-tagline.png" width="100" height="auto" class="d-inline-block align-top" alt="">
         </a>
-        <h2>Administrador</h2>
+        <div>
+            <h1>Usuarios</h1>
+            
+        </div>
         
-        <a href="../../index.html"><button class="btn btn-danger btn-lg" >Salir</button></a>
+        <div></div>
+        <?php echo '<a href="'.$_SERVER['HTTP_REFERER'].'"><button type="button" class="btn btn-danger">Volver</button></a>' ?>
         <div></div>
 </nav>
-<div class="container my-4 ">
-    
-    <h1 class="text-center">Registro de usuarios </h1> 
+<?php 
+include('db.php');
+$cons='SELECT S.IDCONTRATO "CONTRATO", P.PROVEEDOR, C.MON_CON "MONEDA CONTRATO",C.FECHA_FIN "FECHA FIN", C.VR_CONTRATO "VALOR CONTRATO",
 
-    <form action="nuevo_usuario.php" method="post">
-    
+C.VR_POSICION "FACTURADO", C.VR_IVA_FACTURADO "IVA FACTURADO",
 
-    <div class="row">
-    <div class="form-group col-md-6"> 
-            <label for="IDETB">ID ETB </label> 
-            <input type="idetb" class="form-control" id="etb" name="IDETB"> 
-        </div>
-        <div class="form-group col-md-6">
-        <label class="visible" for="tipo">Cargo</label>
-        <select class="form-select" id="tipo" name="tipo" required>
-          <option selected>Seleccione...</option>
-          <option value="ADMINISTRADOR">ADMINISTRADOR</option>
-          <option value="SUPERVISOR">SUPERVISOR</option>
-        </select>
-        </div>
-        <div class="form-group col-md-6"> 
-            <label for="username">Nombre</label> 
-        <input type="text" class="form-control" id="username" name="username" aria-describedby="emailHelp">    
-        </div>
-        <div class="form-group col-md-6"> 
-            <label for="cedula">Cedula</label> 
-        <input type="text" class="form-control" id="cedula" name="cedula" aria-describedby="cedula">    
-        </div>
-    
-        <div class="form-group col-md-6"> 
-            <label for="password">contraseña </label> 
-            <input type="password" class="form-control" id="password" name="password"> 
-        </div>
-    
-        <div class="form-group col-md-6"> 
-            <label for="cpassword">Confirmar Contrraseña</label> 
-            <input type="password" class="form-control"id="cpassword" name="cpassword">
-    
-            
-        </div>      
-    
-        <button type="submit" class="btn btn-primary col-md-3" style=" margin-left: 15px;">
-        Guardar
-        </button>
-    </div> 
-    </form> 
+(C.VR_CONTRATO - (C.VR_POSICION + C.VR_IVA_FACTURADO)) "SALDO CONTRATO",C.FECHA_FIN - SYSDATE "TIEMPO CALCULADO"
+
+FROM TBL_UM_SUPERVISORES S';
+
+        $stid = oci_parse($conexión, $cons);
+        if (!$stid) {
+            $e = oci_error($conexión);
+            trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+        }// Realizar la lógica de la consulta
+        
+        $r = oci_execute($stid);
+        if (!$r) {
+            $e = oci_error($stid);
+            trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+        }// Obtener los resultados de la consulta
+?>
+<div class="container">
+    <h1 class="text-center">Usuarios </h1> 
+    <table class="table table-bordered">
+
+        <thead>
+	    
+	    <a href="nuevo_usuario.php">
+	        <button type="submit" style="float: right;" class="btn btn-primary">
+                Nuevo Usuario
+            </button>
+        </a>
+            <tr>
+                <th>ID ETB</th>
+			    <th>Cargo</th>
+                <th>Nombre</th>
+                <th>Cedula</th>
+                <th>Editar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+			    <td></td>
+			    <td><button type="button" class="btn btn-warning">Editar</button>
+                <button type="button" class="btn btn-success">activar</button>
+			    </tr>
+        
+        </tbody>
+    </table>
 </div>
     <!-- Site footer -->
  <footer class="site-footer">
@@ -133,59 +143,7 @@ background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%
 <script src="scripts/bootstrap.min.js"></script>
 <script src="scripts/bootstrap.bundle.min.js"></script>
 
-<script src="
-https://code.jquery.com/jquery-3.5.1.slim.min.js"
-    integrity="
-sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-    crossorigin="anonymous">
-</script>
-    
-<script src="
-https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-    integrity=
-"sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" 
-    crossorigin="anonymous">
-</script>
-    
-<script src="
-https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" 
-    integrity=
-"sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
-    crossorigin="anonymous">
-</script> 
+<script type="text/javascript" src="js/VentanaCentrada.js"></script>
+	<script type="text/javascript" src="js/facturas.js"></script>
 </body>
-</html>
-   
-   <!-- original -->
-<!doctype html>
-    
-<html lang="en">
-  
-<head>
-    
-    <!-- Required meta tags --> 
-    <meta charset="utf-8"> 
-    <meta name="viewport" content=
-        "width=device-width, initial-scale=1, 
-        shrink-to-fit=no">
-    
-    <!-- Bootstrap CSS --> 
-    <link rel="stylesheet" href=
-"https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-        integrity=
-"sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
-        crossorigin="anonymous">  
-</head>
-    
-<body>
-    
-
-    
-
-    
-<!-- Optional JavaScript --> 
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    
-
-</body> 
 </html>
