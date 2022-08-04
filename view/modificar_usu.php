@@ -1,3 +1,32 @@
+<?php 
+include('db.php');
+
+$id = $_GET['id'];
+$cons='SELECT SUPERVISOR, LOGIN, CONDICION, CARGO, CEDULA, CLAVE FROM TBL_UM_SUPERVISORES WHERE login ='.$id;
+
+        $stid = oci_parse($conexión, $cons);
+        if (!$stid) {
+            $e = oci_error($conexión);
+            trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+        }// Realizar la lógica de la consulta
+        
+        $r = oci_execute($stid);
+        if (!$r) {
+            $e = oci_error($stid);
+            trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
+        }// Obtener los resultados de la consulta
+
+       
+             while ($fila = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+
+              $sup = oci_result($stid, 'SUPERVISOR');
+              $login = oci_result($stid, 'LOGIN');
+              $cond = oci_result($stid, 'CONDICION');
+              $cargo = oci_result($stid, 'CARGO');
+              $cedula = oci_result($stid, 'CEDULA');          
+              $pass = oci_result($stid, 'CLAVE');    
+             }      
+          ?>   
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -26,78 +55,55 @@ background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%
         <?php echo '<a href="'.$_SERVER['HTTP_REFERER'].'"><button type="button" class="btn btn-danger">Volver</button></a>' ?>
         <div></div>
 </nav>
-<?php 
-include('db.php');
-$cons='SELECT SUPERVISOR, LOGIN, CONDICION, CARGO, CEDULA FROM TBL_UM_SUPERVISORES';
+<div class="container my-4 ">
+    
+    <h1 class="text-center">modificacion de usuarios</h1> 
 
-        $stid = oci_parse($conexión, $cons);
-        if (!$stid) {
-            $e = oci_error($conexión);
-            trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
-        }// Realizar la lógica de la consulta
-        
-        $r = oci_execute($stid);
-        if (!$r) {
-            $e = oci_error($stid);
-            trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
-        }// Obtener los resultados de la consulta
+    <form action="signup.php" method="post">
+    
 
-       
 
-       $i = 1;
-?>
-<div class="container">
-    <h1 class="text-center">Usuarios </h1> 
-    <table class="table table-bordered">
+    <div class="form-group"> 
+            <label for="IDETB">ID ETB </label> 
+            <input type="text" class="form-control"
+            id="etb" name="IDETB" value="<?php echo $login ?>"> 
+        </div>
+        <div class="form-group"> 
+        <label class="visible" for="tipo">Cargo</label>
+        <select class="form-select" id="tipo" name="tipo"  value="<?php echo $cargo ?>" required>
+          <option selected>Seleccione...</option>
+          <option value="ADMINISTRADOR">ADMINISTRADOR</option>
+          <option value="SUPERVISOR">SUPERVISOR</option>
+        </select>
+        </div>
+        <div class="form-group"> 
+            <label for="username">nombre de usuario</label> 
+            <input type="text" class="form-control" id="username"
+            name="username" aria-describedby="emailHelp" value="<?php echo $sup ?>">    
+        </div>
+        <div class="form-group"> 
+            <label for="username">Cedula</label> 
+        <input type="text" class="form-control" id="username"
+            name="username" aria-describedby="cedula"  value="<?php echo $cedula ?>">    
+        </div>
+    
+        <div class="form-group"> 
+            <label for="password">contraseña </label> 
+            <input type="password" class="form-control"
+            id="password" name="password"  value="<?php echo $pass ?>"> 
+        </div>
+    
+        <div class="form-group"> 
+            <label for="cpassword">Confirmar Contrraseña</label> 
+            <input type="password" class="form-control"
+                id="cpassword" name="cpassword">
 
-        <thead>
-	    
-	    <a href="nuevo_usuario.php">
-	        <button type="submit" style="float: right;" class="btn btn-primary">
-                Nuevo Usuario
-            </button>
-        </a>
-            <tr>
-                <th>#</th>
-                <th>ID ETB</th>
-			          <th>Cargo</th>
-                <th>Nombre</th>
-                <th>Cedula</th>
-                <th>Editar</th>
-            </tr>
-        </thead>
-        <tbody>
-          <?php 
-             while ($fila = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
-
-              $sup = oci_result($stid, 'SUPERVISOR');
-              $login = oci_result($stid, 'LOGIN');
-              $cond = oci_result($stid, 'CONDICION');
-              $cargo = oci_result($stid, 'CARGO');
-              $cedula = oci_result($stid, 'CEDULA');          
-          ?>
-            <tr>
-              <td><?php $j = $i++; echo $j?></td>
-              <td><?php echo $login ?></td>
-              <td><?php echo $cargo ?></td>
-              <td><?php echo $sup ?></td>
-              <td><?php echo $cedula ?></td>
-			        <td>
-                <a href="modificar_usu.php?id=<?php echo $login?>"><button type="button" class="btn btn-warning" >Editar</button></a>
-                <?php
-                if($cond == 1){
-                   print "<button type='button' class='btn btn-danger'>inhabilitar</button>";
-                 
-                }else{
-                  print "<button type='button' class='btn btn-success'onclick='clickMe()'>habilitar</button>";
-                }
-                ?>
-			        </tr>
-                  <?php 
-                  }
-                ?>
-        </tbody>
-    </table>
+        </div>      
+    
+        <button type="submit" class="btn btn-primary">
+        Guardar
+        </button> 
+    </form> 
 </div>
     <!-- Site footer -->
  <footer class="site-footer">
@@ -163,10 +169,10 @@ $cons='SELECT SUPERVISOR, LOGIN, CONDICION, CARGO, CEDULA FROM TBL_UM_SUPERVISOR
   <script src="scripts/bootstrap.bundle.min.js"></script>
   <script type="text/javascript" src="js/VentanaCentrada.js"></script>
 	<script type="text/javascript" src="js/facturas.js"></script>
-	<script>
-  function clickMe(){
-  alert('<?php echo test(); ?>');
-  }
-</script>
+	
 </body>
 </html>
+
+
+
+    
