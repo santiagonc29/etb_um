@@ -11,6 +11,65 @@
     <title>ADMINISTRADOR</title>
 </head>
 <body>
+  <style>
+  .switchBtn {
+    position: relative;
+    display: inline-block;
+    width: 70px;
+    height: 34px;
+}
+.switchBtn input {display:none;}
+.slide {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #F57E58;
+    -webkit-transition: .4s;
+    transition: .4s;
+    padding: 8px;
+    color: #fff;
+}
+.slide:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 40px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+input:checked + .slide {
+    background-color: #8CE196;
+    padding-left: 40px;
+}
+input:focus + .slide {
+    box-shadow: 0 0 1px #01aeed;
+}
+input:checked + .slide:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+    left: -20px;
+}
+
+.slide.round {
+    border-radius: 34px;
+}
+.slide.round:before {
+    border-radius: 50%;
+}
+
+.btnSwt{
+  
+}
+
+  </style>
+
 <nav class="navbar navbar-light nav-justified" style="background: rgb(0,255,255);
 background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%); color: white;">
     <div></div>
@@ -45,6 +104,10 @@ $cons='SELECT SUPERVISOR, LOGIN, CONDICION, CARGO, CEDULA FROM TBL_UM_SUPERVISOR
        
 
        $i = 1;
+
+       function test(){
+        echo "Se ha activado el boton";
+       }
 ?>
 <div class="container">
     <h1 class="text-center">Usuarios </h1> 
@@ -64,6 +127,7 @@ $cons='SELECT SUPERVISOR, LOGIN, CONDICION, CARGO, CEDULA FROM TBL_UM_SUPERVISOR
                 <th>Nombre</th>
                 <th>Cedula</th>
                 <th>Editar</th>
+                <th>estado</th>
             </tr>
         </thead>
         <tbody>
@@ -82,16 +146,29 @@ $cons='SELECT SUPERVISOR, LOGIN, CONDICION, CARGO, CEDULA FROM TBL_UM_SUPERVISOR
               <td><?php echo $cargo ?></td>
               <td><?php echo $sup ?></td>
               <td><?php echo $cedula ?></td>
+              
 			        <td>
-                <a href="modificar_usu.php?id=<?php echo $login?>"><button type="button" class="btn btn-warning" >Editar</button></a>
-                <?php
+                <a href="modificar_usu.php?id=<?php echo $login?>"><button type="button" class="btn btn-light" >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                </svg>
+                </button></a>
+             </td>
+                <td>
+                  <?php
                 if($cond == 1){
-                   print "<button type='button' class='btn btn-danger'>inhabilitar</button>";
-                 
+                  
+                   print '<a href="usuarios.php"><button class="btn btn-light btnSwt" style="background:#F57E58;" onclick="clickMe()" >
+                   deshabilitar
+                  </button>';
                 }else{
-                  print "<button type='button' class='btn btn-success'onclick='clickMe()'>habilitar</button>";
+                  print '<a href="usuarios.php"><button class="btn btn-light btnSwt" style="background: #8CE196;"onclick="clickMe()" >
+                  habilitar
+                  </button></a>';
                 }
                 ?>
+                </td>
 			        </tr>
                   <?php 
                   }
@@ -163,10 +240,6 @@ $cons='SELECT SUPERVISOR, LOGIN, CONDICION, CARGO, CEDULA FROM TBL_UM_SUPERVISOR
   <script src="scripts/bootstrap.bundle.min.js"></script>
   <script type="text/javascript" src="js/VentanaCentrada.js"></script>
 	<script type="text/javascript" src="js/facturas.js"></script>
-	<script>
-  function clickMe(){
-  alert('<?php echo test(); ?>');
-  }
-</script>
+	
 </body>
 </html>
