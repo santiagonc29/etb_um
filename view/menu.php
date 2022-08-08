@@ -56,7 +56,7 @@ background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%
   <!-- tarjeta usuarios -->
 
   <div class="div1">
-    <a class="link" href="clientes.php">
+    <a class="link" href="informes.php">
     <div class="card">
       <div class="face face1">
         <div class="content">
