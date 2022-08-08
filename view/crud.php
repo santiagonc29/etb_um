@@ -79,7 +79,7 @@ switch($_GET['op']){
                         trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
                     }// Obtener los resultados de la consulta
                     echo '<script type="text/javascript">
-                    alert("Se inhabilito el usuario correctamente");
+                    
                     window.location.href="usuarios.php";
                     </script>';
                    
@@ -100,7 +100,7 @@ switch($_GET['op']){
                     trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
                 }// Obtener los resultados de la consulta 
                     echo '<script type="text/javascript">
-                        alert("Se habilito el usuario correctamente");
+                        
                         window.location.href="usuarios.php";
                         </script>';
             }
