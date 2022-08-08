@@ -40,6 +40,16 @@ $cons='SELECT SUPERVISOR, LOGIN, CONDICION, CARGO, CEDULA, CLAVE FROM TBL_UM_SUP
     <title>ADMINISTRADOR</title>
 </head>
 <body>
+
+<style>
+  .input{
+    padding:8px 10px;
+    height: 40px;
+    border: #E5E8E8 1px solid;
+    background: #F2F4F4;
+    border-radius: 5px;
+}
+</style>
 <nav class="navbar navbar-light nav-justified" style="background: rgb(0,255,255);
 background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%); color: white;">
     <div></div>
@@ -59,14 +69,12 @@ background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%
     
     <h1 class="text-center">modificacion de usuarios</h1> 
 
-    <form action="signup.php" method="post">
+    <form action="crud.php?op=modificar" method="post">
     
-
-
     <div class="form-group"> 
-            <label for="IDETB">ID ETB </label> 
-            <input type="text" class="form-control"
-            id="etb" name="IDETB" value="<?php echo $login ?>"> 
+            <label for="IDETB">ID ETB </label>
+            <div class="input"><?php echo $login ?></div>
+            <input type="hidden" class="form-control" id="IDETB" name="IDETB" value="<?php echo $login ?>"> 
         </div>
         <div class="form-group"> 
         <label class="visible" for="tipo">Cargo</label>
@@ -82,9 +90,9 @@ background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%
             name="username" aria-describedby="emailHelp" value="<?php echo $sup ?>">    
         </div>
         <div class="form-group"> 
-            <label for="username">Cedula</label> 
-        <input type="text" class="form-control" id="username"
-            name="username" aria-describedby="cedula"  value="<?php echo $cedula ?>">    
+            <label for="cc">Cedula</label> 
+        <input type="text" class="form-control" id="cc"
+            name="cc" aria-describedby="cedula"  value="<?php echo $cedula ?>">    
         </div>
     
         <div class="form-group"> 

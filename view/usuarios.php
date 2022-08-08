@@ -116,9 +116,12 @@ $cons='SELECT SUPERVISOR, LOGIN, CONDICION, CARGO, CEDULA FROM TBL_UM_SUPERVISOR
         <thead>
 	    
 	    <a href="nuevo_usuario.php">
-	        <button type="submit" style="float: right;" class="btn btn-primary">
-                Nuevo Usuario
-            </button>
+	        <button type="submit" style="float: right; margin-bottom: 10px;" class="btn btn-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+              <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+            </svg>
+          </button>
         </a>
             <tr>
                 <th>#</th>
@@ -159,11 +162,11 @@ $cons='SELECT SUPERVISOR, LOGIN, CONDICION, CARGO, CEDULA FROM TBL_UM_SUPERVISOR
                   <?php
                 if($cond == 1){
                   
-                   print '<a href="usuarios.php"><button class="btn btn-light btnSwt" style="background:#F57E58;" onclick="clickMe()" >
+                   print '<a href="crud.php?op=habilitar&cond='.$cond.'&id='.$login.'"><button class="btn btn-light btnSwt" style="background:#F57E58;" >
                    deshabilitar
                   </button>';
                 }else{
-                  print '<a href="usuarios.php"><button class="btn btn-light btnSwt" style="background: #8CE196;"onclick="clickMe()" >
+                  print '<a href="crud.php?op=habilitar&cond='.$cond.'&id='.$login.'"><button class="btn btn-light btnSwt" style="background: #8CE196;">
                   habilitar
                   </button></a>';
                 }

@@ -97,7 +97,7 @@ background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%
                $fecha = "";
               
                 print "<h4 class='tltSup'>Supervisor: ".$sup."</h4>";
-                print "<h4> corte a: ".$fecha."</h4>";
+                //print "<h4> corte a: ".$fecha."</h4>";
              
         ?>
         </div>
