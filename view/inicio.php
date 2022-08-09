@@ -52,7 +52,7 @@ background: linear-gradient(156deg, rgba(0,255,255,1) 0%, rgba(20,193,234,1) 61%
 <!-- tarjeta contratos -->
 
   <div class="div2"> 
-    <a class="link" href="#">
+    <a class="link" href="contrato.php">
     <div class="card">
       <div class="face face1">
         <div class="content">

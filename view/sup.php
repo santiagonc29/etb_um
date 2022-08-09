@@ -13,6 +13,28 @@
     body{
         background: #F2F4F4;
     }
+    .inf1{
+      position: relative;
+    }
+
+    .inf2{
+      position: absolute;
+      top: -10px;
+      left: 30px;
+      display: none;
+      width: 150px;
+      height: 120px;
+      padding: 10px;
+      background: #FFF;
+      border: solid black 1px;
+      border-radius:20px;
+      font-size: 10px;
+      text-align: center;
+    }
+
+    .inf1:hover > .inf2{
+      display: block;
+    }
 
     .contBtn{
       width:30%;
@@ -181,7 +203,7 @@ $cons='SELECT C.IDCONTRATO "CONTRATO", P.PROVEEDOR, C.MON_CON "MONEDA CONTRATO",
 
 C.VR_POSICION "FACTURADO", C.VR_IVA_FACTURADO "IVA FACTURADO",
 
-(C.VR_CONTRATO - (C.VR_POSICION + C.VR_IVA_FACTURADO)) "SALDO CONTRATO",C.FECHA_FIN - SYSDATE "TIEMPO CALCULADO"
+(C.VR_CONTRATO - (C.VR_POSICION + C.VR_IVA_FACTURADO)) "SALDO CONTRATO",C.FECHA_FIN - SYSDATE "TIEMPO CALCULADO", C.PPP_meses "PPP"
 
 FROM TBL_UM_CONTRATOS C
 
@@ -191,7 +213,7 @@ INNER JOIN TBL_UM_PROVEEDORES P ON C.IDPROVEEDOR=P.IDPROVEEDOR
 
 WHERE C.IDSUPERVISOR = ' .$Usuario.'
 
-GROUP BY C.IDCONTRATO, P.PROVEEDOR, S.LOGIN, S.SUPERVISOR,C.MON_CON,C.FECHA_FIN,C.VR_CONTRATO,C.VR_POSICION,C.VR_IVA_FACTURADO
+GROUP BY C.IDCONTRATO, P.PROVEEDOR, S.LOGIN, S.SUPERVISOR,C.MON_CON,C.FECHA_FIN,C.VR_CONTRATO,C.VR_POSICION,C.VR_IVA_FACTURADO, C.PPP_meses
 
 ORDER BY C.IDCONTRATO ASC';
         $stid = oci_parse($conexión, $cons);
@@ -224,7 +246,40 @@ ORDER BY C.IDCONTRATO ASC';
             <td><strong>SALDO CONTRATO</strong></td>
             <td><strong>P.P.P</strong></td>
             <td><strong>P.P.E</strong></td>
-            <td><strong>Vencimiento</strong></td>
+            <td class="inf1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+              </svg>
+                <div class="inf2">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#6CD410" class="bi bi-circle-fill" viewBox="0 0 16 16">
+                          <circle cx="8" cy="8" r="8"/>
+                      </svg>
+                       Si faltan mas de 90 dias 
+                      </div>
+                    <div class="col-md-12">
+                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#F1C40F" class="bi bi-circle-fill" viewBox="0 0 16 16">
+                          <circle cx="8" cy="8" r="8"/>
+                       </svg> 
+                       Si faltan mas de 30 dias
+                    </div>
+                    <div class="col-md-12">
+                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#E74C3C" class="bi bi-circle-fill" viewBox="0 0 16 16">
+                          <circle cx="8" cy="8" r="8"/>
+                        </svg>
+                        Si faltan mas de 30 dias
+                    </div>
+                    <div class="col-md-12">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#000" class="bi bi-circle-fill" viewBox="0 0 16 16">
+                          <circle cx="8" cy="8" r="8"/>
+                      </svg>
+                      Si faltan menos de 30 dias
+                    </div>
+                  </div>
+                </div>
+            </td>
             <td><strong>ENLACES</strong></td>
             <td><strong>MAS INFORMACIÓN</strong></td>
         </tr>
@@ -246,11 +301,11 @@ ORDER BY C.IDCONTRATO ASC';
                     <td><?php echo oci_result($stid, 'FACTURADO') ?></td>
                     <td><?php echo oci_result($stid, 'IVA FACTURADO') ?></td>
                     <td><?php echo oci_result($stid, 'SALDO CONTRATO') ?></td>
+                    <td><?php echo oci_result($stid, 'PPP') ?></td>
                     <td><?php echo "Sin datos" ?></td>
-                    <td><?php echo "Sin datos" ?></td>
-                    <td><?php 
+                    <td ><?php 
                        if($dias <= 0){
-                        $color = "#000 ";
+                        $color = "#000";
                       }else{
                         if($dias > 90){
                           $color = "#6CD410";
@@ -262,11 +317,9 @@ ORDER BY C.IDCONTRATO ASC';
                       }
                       
                       ?>
-                        <svg viewbox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M 0, 28 C 0, 12.040000000000001 12.040000000000001, 0 28, 0 S 56, 12.040000000000001 56, 28 43.96, 56 28, 56 0, 43.96 0, 28
-                         " fill="<?php echo $color ?>" transform="rotate(0,100,100) translate(72 72)">
-                        </path>
-                      </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="<?php echo $color?>" class="bi bi-circle-fill" viewBox="0 0 16 16">
+                          <circle cx="8" cy="8" r="8"/>
+                        </svg>
                     </td>
                     <td><a href="enlaces.php?contrato=<?php echo $contrato ?>&proveedor= <?php echo $proveedor?>&Usuario= <?php echo $Usuario?>" ><button type='button' class='btn btn-light'>Enlace</button></a></td>
 

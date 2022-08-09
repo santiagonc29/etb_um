@@ -102,7 +102,6 @@ $cons='SELECT SUPERVISOR, LOGIN, CONDICION, CARGO, CEDULA FROM TBL_UM_SUPERVISOR
         }// Obtener los resultados de la consulta
 
        
-
        $i = 1;
 
        function test(){

@@ -163,11 +163,9 @@ WHERE C.NUMERO_DE_CONTRATO ='.$idEnlace;
                       }
                       
                       ?>
-                      <svg viewbox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M 0, 28 C 0, 12.040000000000001 12.040000000000001, 0 28, 0 S 56, 12.040000000000001 56, 28 43.96, 56 28, 56 0, 43.96 0, 28
-                         " fill="<?php echo $color ?>" transform="rotate(0,100,100) translate(72 72)">
-                        </path>
-                      </svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="<?php echo $color?>" class="bi bi-circle-fill" viewBox="0 0 16 16">
+                          <circle cx="8" cy="8" r="8"/>
+                        </svg>
                     </td>
                     <td><?php $idetb = oci_result($stid, 'ID ETB'); echo $idetb ?></td>
                     <td><?php echo oci_result($stid, 'CLIENTE'); ?></td>
